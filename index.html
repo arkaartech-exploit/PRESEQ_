@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #14171A; }
+  body { font-family: "Source Sans 3", system-ui, sans-serif; color: #F5F6F7; -webkit-font-smoothing: antialiased; overflow-x: hidden; text-wrap: pretty; }
+  * { box-sizing: border-box; }
+  a { color: #F2B01E; text-decoration: none; }
+  a:hover { color: #FFC94D; text-decoration: underline; }
+  :focus-visible { outline: 3px solid #F2B01E; outline-offset: 2px; }
+  button, input, select, textarea { font-family: inherit; }
+</style>
+</helmet>
+
+<div style="background:#14171A;min-height:100vh;padding-bottom:64px">
+
+<header style="position:sticky;top:0;z-index:60;background:rgba(20,23,26,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)">
+  <div style="max-width:1320px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;min-width:0">
+    <button onClick="{{ goInicio }}" aria-label="PRESEQ — ir a Inicio" style="background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;flex:0 0 auto">
+      <img src="assets/preseq-logo.jpeg" alt="PRESEQ — Prevención, Seguridad y Equipamiento" style="height:56px;width:auto;display:block" />
+    </button>
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Navegación principal" style="display:flex;flex-wrap:wrap;align-items:center;gap:2px;margin-left:4px;min-width:0">
+        <sc-for list="{{ nav }}" as="it" hint-placeholder-count="7">
+          <button onClick="{{ it.go }}" aria-current="{{ it.current }}" style="background:none;border:0;border-bottom:2px solid {{ it.bd }};color:{{ it.color }};font-family:Oswald,sans-serif;font-weight:500;font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;padding:10px;cursor:pointer;white-space:nowrap" style-hover="color:#CE1B1B">{{ it.label }}</button>
+        </sc-for>
+      </nav>
+    </sc-if>
+
+    <div style="flex:1 1 auto"></div>
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <a href="{{ telHref }}" style="color:#F5F6F7;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.04em;white-space:nowrap;border-left:1px solid rgba(255,255,255,.08);padding-left:16px" style-hover="color:#F2B01E;text-decoration:none">{{ telefonoPrincipal }}</a>
+    </sc-if>
+
+    <button onClick="{{ toggleQuote }}" aria-label="Abrir mi cotización" style="background:#23282E;border:1px solid rgba(255,255,255,.08);color:#F5F6F7;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:11px 13px;cursor:pointer;white-space:nowrap" style-hover="border:1px solid #CE1B1B">
+      Mi cotización
+      <span style="display:inline-block;margin-left:8px;min-width:22px;padding:1px 6px;background:#CE1B1B;color:#fff;font-size:12px">{{ quoteCount }}</span>
+    </button>
+
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <a href="{{ waHref }}" target="_blank" rel="noopener" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);color:#fff;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:13px 18px;white-space:nowrap;border:1px solid rgba(255,255,255,.12)" style-hover="color:#fff;text-decoration:none;filter:brightness(1.12)">Cotizar por WhatsApp</a>
+    </sc-if>
+
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ toggleMenu }}" aria-label="Abrir menú" aria-expanded="{{ menuOpen }}" style="background:#23282E;border:1px solid rgba(255,255,255,.08);padding:12px 13px;cursor:pointer;display:flex;flex-direction:column;gap:4px">
+        <span style="display:block;width:18px;height:2px;background:#F5F6F7"></span>
+        <span style="display:block;width:18px;height:2px;background:#F5F6F7"></span>
+        <span style="display:block;width:18px;height:2px;background:#F5F6F7"></span>
+      </button>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ megaOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="border-top:1px solid rgba(255,255,255,.08);background:#1A1E22">
+      <div style="max-width:1320px;margin:0 auto;padding:26px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4px 40px">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="11">
+          <button onClick="{{ c.open }}" style="text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 6px;cursor:pointer;display:block;width:100%" style-hover="background:#23282E">
+            <span style="display:block;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.03em;text-transform:uppercase;color:#F5F6F7">{{ c.name }}</span>
+            <span style="display:block;font-size:13px;color:#9AA3AD;margin-top:3px">{{ c.short }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="Navegación móvil" style="border-top:1px solid rgba(255,255,255,.08);background:#1A1E22;padding:8px 16px 20px">
+      <sc-for list="{{ nav }}" as="it" hint-placeholder-count="7">
+        <button onClick="{{ it.go }}" style="display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.08);color:#F5F6F7;font-family:Oswald,sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;padding:16px 4px;cursor:pointer">{{ it.label }}</button>
+      </sc-for>
+      <a href="{{ telHref }}" style="display:block;margin-top:16px;color:#F2B01E;font-family:Oswald,sans-serif;font-size:16px">Llamar {{ telefonoPrincipal }}</a>
+    </nav>
+  </sc-if>
+</header>
+
+<sc-if value="{{ quoteOpen }}" hint-placeholder-val="{{ false }}">
+  <aside aria-label="Mi cotización" style="position:fixed;z-index:80;top:0;right:0;bottom:0;width:min(420px,100vw);background:#1A1E22;border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <h2 style="margin:0;font-family:Oswald,sans-serif;font-size:20px;letter-spacing:.04em;text-transform:uppercase;color:#F5F6F7">Mi cotización</h2>
+      <button onClick="{{ toggleQuote }}" aria-label="Cerrar" style="background:#23282E;border:1px solid rgba(255,255,255,.08);color:#F5F6F7;font-size:18px;line-height:1;padding:8px 12px;cursor:pointer">×</button>
+    </div>
+    <div style="flex:1 1 auto;overflow:auto;padding:16px 20px">
+      <sc-if value="{{ quoteEmpty }}" hint-placeholder-val="{{ true }}">
+        <p style="color:#9AA3AD;font-size:15px;line-height:1.6;margin:8px 0">Aún no ha agregado productos. Desde el catálogo use <strong style="color:#F5F6F7">“Agregar a cotización”</strong> y al terminar enviamos la lista por WhatsApp.</p>
+      </sc-if>
+      <sc-for list="{{ quote }}" as="q" hint-placeholder-count="0">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div style="flex:1 1 auto;min-width:0">
+            <p style="margin:0;font-size:15px;color:#F5F6F7;line-height:1.35">{{ q.name }}</p>
+            <p style="margin:4px 0 0;font-size:13px;color:#9AA3AD">{{ q.cat }}</p>
+          </div>
+          <button onClick="{{ q.remove }}" aria-label="Quitar de la cotización" style="background:none;border:1px solid rgba(255,255,255,.08);color:#9AA3AD;font-size:14px;padding:6px 10px;cursor:pointer" style-hover="color:#CE1B1B;border:1px solid #CE1B1B">Quitar</button>
+        </div>
+      </sc-for>
+    </div>
+    <div style="padding:20px;border-top:1px solid rgba(255,255,255,.08)">
+      <a href="{{ quoteWaHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;background:linear-gradient(135deg,#CE1B1B,#8E1010);color:#fff;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:16px" style-hover="color:#fff;text-decoration:none;filter:brightness(1.12)">Enviar lista por WhatsApp</a>
+      <p style="margin:12px 0 0;font-size:12px;color:#9AA3AD;line-height:1.5">Cotización bajo pedido. Un asesor responde con disponibilidad y vigencia.</p>
+    </div>
+  </aside>
+</sc-if>
+
+<main>
+
+<sc-if value="{{ isInicio }}" hint-placeholder-val="{{ true }}">
+<div>
+  <section style="position:relative;background:#14171A;border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden">
+    <img src="assets/stock/hero-incendio.webp" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% center" />
+    <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(20,23,26,.96) 0%,rgba(20,23,26,.82) 48%,rgba(35,40,46,.55) 100%)"></div>
+    <div style="position:absolute;left:0;bottom:0;width:100%;height:120px;background:#14171A;clip-path:polygon(0 60%,100% 0,100% 100%,0 100%);opacity:.9"></div>
+    <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(52px,9vw,124px) 16px clamp(70px,9vw,132px)">
+      <p style="margin:0 0 20px;display:inline-block;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E;border:1px solid rgba(242,176,30,.45);padding:7px 12px">Morelia, Michoacán · desde {{ anoFundacion }}</p>
+      <h1 style="margin:0;max-width:17ch;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(38px,7.2vw,82px);line-height:.98;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Protegemos su empresa y a su familia</h1>
+      <p style="margin:24px 0 0;max-width:58ch;font-size:clamp(16px,2.1vw,21px);line-height:1.55;color:#C6CDD4">Equipo contra incendio, recarga certificada, capacitación y cumplimiento normativo en Morelia y el centro-occidente de México.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px">
+        <button onClick="{{ goContacto }}" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 30px;cursor:pointer" style-hover="filter:brightness(1.12)">Solicitar cotización</button>
+        <button onClick="{{ goProductos }}" style="background:transparent;border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 30px;cursor:pointer" style-hover="background:#F5F6F7;color:#14171A">Ver catálogo</button>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Credenciales" style="background:#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:22px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ credenciales }}" as="c" hint-placeholder-count="4">
+        <div style="background:#1A1E22;padding:18px 20px">
+          <p style="margin:0;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#F2B01E;line-height:1.25">{{ c.titulo }}</p>
+          <p style="margin:7px 0 0;font-size:14px;line-height:1.5;color:#C6CDD4">{{ c.detalle }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,80px) 16px">
+    <p style="margin:0 0 20px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">01 · Qué necesita</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px">
+      <sc-for list="{{ accesos }}" as="a" hint-placeholder-count="3">
+        <button onClick="{{ a.go }}" style="text-align:left;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:32px 28px 28px;cursor:pointer" style-hover="border:1px solid #CE1B1B">
+          <span style="display:block;width:46px;height:46px;border:2px solid #CE1B1B;border-radius:{{ a.radius }};margin-bottom:22px"></span>
+          <span style="display:block;font-family:Oswald,sans-serif;font-weight:600;font-size:22px;letter-spacing:.02em;text-transform:uppercase;color:#F5F6F7;line-height:1.1">{{ a.title }}</span>
+          <span style="display:block;margin-top:12px;font-size:15px;line-height:1.55;color:#9AA3AD">{{ a.desc }}</span>
+          <span style="display:block;margin-top:18px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#CE1B1B">Ver más →</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#1A1E22;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,80px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:44px;align-items:start">
+      <div>
+        <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">02 · Autodiagnóstico</p>
+        <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(28px,4vw,44px);line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;color:#F5F6F7">¿Su empresa cumple?</h2>
+        <p style="margin:18px 0 0;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:44ch">Cinco puntos que revisa cualquier inspección. Si falla en uno o más, levantamos el diagnóstico de equipamiento en sitio.</p>
+        <button onClick="{{ goConsultoria }}" style="margin-top:28px;background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:16px 26px;cursor:pointer" style-hover="filter:brightness(1.12)">Diagnóstico de equipamiento</button>
+      </div>
+      <ul style="list-style:none;margin:0;padding:0;border-top:1px solid rgba(255,255,255,.08)">
+        <sc-for list="{{ checklist }}" as="c" hint-placeholder-count="5">
+          <li style="display:flex;gap:16px;align-items:flex-start;padding:18px 4px;border-bottom:1px solid rgba(255,255,255,.08)">
+            <span aria-hidden="true" style="flex:0 0 auto;width:14px;height:14px;border:2px solid #CE1B1B;margin-top:4px"></span>
+            <span style="font-size:16px;line-height:1.5;color:#F5F6F7">{{ c }}</span>
+          </li>
+        </sc-for>
+      </ul>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,72px) 16px">
+    <div style="position:relative;background:#23282E;border:1px solid rgba(242,176,30,.35);overflow:hidden">
+      <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(206,27,27,.18) 0%,rgba(35,40,46,0) 55%)"></div>
+      <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:32px;padding:clamp(26px,4vw,48px);align-items:center">
+        <div>
+          <p style="margin:0 0 14px;display:inline-block;background:rgba(242,176,30,.14);border:1px solid rgba(242,176,30,.5);color:#F2B01E;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px">Nuevo en la región</p>
+          <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(26px,4vw,42px);line-height:1.05;text-transform:uppercase;color:#F5F6F7">Extintores para baterías de litio · F-500</h2>
+          <p style="margin:16px 0 0;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:52ch">Montacargas eléctricos, salas de baterías, almacenes de litio y flotillas. El agente F-500 encapsula y enfría, donde el PQS convencional no controla la reacción térmica. Muy pocos proveedores lo manejan en el centro-occidente.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
+            <button onClick="{{ goLitio }}" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:16px 24px;cursor:pointer" style-hover="filter:brightness(1.12)">Ver equipos F-500</button>
+            <a href="{{ waLitio }}" target="_blank" rel="noopener" style="border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:16px 24px" style-hover="background:#F5F6F7;color:#14171A;text-decoration:none">Preguntar por WhatsApp</a>
+          </div>
+        </div>
+        <img src="assets/stock/bombero-fuego.webp" alt="Bombero con equipo de respiración frente a un incendio" style="display:block;width:100%;height:100%;min-height:230px;max-height:420px;object-fit:cover;border:1px solid rgba(255,255,255,.08)" />
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:0 16px clamp(44px,6vw,80px)">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">03 · Catálogo</p>
+    <h2 style="margin:0 0 8px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,40px);letter-spacing:-.01em;text-transform:uppercase;color:#F5F6F7">Categorías destacadas</h2>
+    <p style="margin:0 0 30px;font-size:16px;color:#9AA3AD">Cotización bajo pedido, con asesoría de la norma que le aplica.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px">
+      <sc-for list="{{ destacadas }}" as="d" hint-placeholder-count="6">
+        <button onClick="{{ d.open }}" style="text-align:left;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:0;cursor:pointer;overflow:hidden" style-hover="border:1px solid #CE1B1B">
+          <sc-if value="{{ d.img }}" hint-placeholder-val="{{ false }}"><span role="img" aria-label="{{ d.alt }}" style="display:block;width:100%;height:180px;background-color:#2B3138;background-image:{{ d.bg }};background-size:cover;background-position:center;border-bottom:1px solid rgba(255,255,255,.08)"></span></sc-if>
+          <sc-if value="{{ d.noImg }}" hint-placeholder-val="{{ true }}"><span role="img" aria-label="{{ d.alt }}" style="display:flex;align-items:center;justify-content:center;height:180px;background:repeating-linear-gradient(45deg,#2B3138 0 10px,#252A30 10px 20px);border-bottom:1px solid rgba(255,255,255,.08)">
+            <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.08em;color:#9AA3AD;text-transform:uppercase;padding:0 14px;text-align:center">{{ d.ph }}</span>
+          </span></sc-if>
+          <span style="display:block;padding:20px 22px 24px">
+            <span style="display:block;font-family:Oswald,sans-serif;font-weight:600;font-size:19px;letter-spacing:.03em;text-transform:uppercase;color:#F5F6F7">{{ d.name }}</span>
+            <span style="display:block;margin-top:8px;font-size:14px;line-height:1.5;color:#9AA3AD">{{ d.short }}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section aria-label="Cobertura" style="background:#1A1E22;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,80px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:40px;align-items:center">
+      <div>
+        <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">04 · Cobertura</p>
+        <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,40px);letter-spacing:-.01em;text-transform:uppercase;color:#F5F6F7">Ocho estados desde Morelia</h2>
+        <p style="margin:16px 0 24px;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:46ch">Producto, recarga, capacitación y consultoría con ruta programada al Bajío y Occidente. La planta que nos contrata en Morelia recibe el mismo servicio en sus otras sedes.</p>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px">
+          <sc-for list="{{ estados }}" as="e" hint-placeholder-count="8">
+            <li style="display:flex;align-items:center;gap:9px;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:9px 14px;font-size:14px;color:#F5F6F7">
+              <span aria-hidden="true" style="width:9px;height:9px;background:#CE1B1B;display:block"></span>{{ e }}
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center">
+        <img src="assets/cobertura-preseq.png" alt="Mapa de cobertura de PRESEQ: Michoacán, Guanajuato, Jalisco, Querétaro, Guerrero, Veracruz, Tlaxcala y Estado de México, con matriz en Morelia" style="display:block;width:100%;height:auto;max-width:720px" />
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,72px) 16px">
+    <h2 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:500;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#9AA3AD">Marcas que distribuimos</h2>
+    <p style="margin:0 0 22px;font-size:14px;color:#7E868F">Placas de texto como marcador de posición; los logotipos se integran con autorización de cada fabricante.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="17">
+        <div style="background:#23282E;padding:22px 14px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;text-align:center">
+          <span style="font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ m }}</span>
+          <span style="margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#7E868F">logotipo autorizado pendiente</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section aria-label="Contacto directo" style="background:linear-gradient(120deg,#CE1B1B,#8E1010);border-top:1px solid rgba(255,255,255,.12)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(34px,5vw,56px) 16px;display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center;justify-content:space-between">
+      <div>
+        <p style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3.2vw,34px);text-transform:uppercase;color:#fff;line-height:1.1">Atención inmediata para su planta</p>
+        <p style="margin:10px 0 0;font-size:16px;color:#FFE3E3">{{ horario }}</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="{{ telHref }}" style="background:#14171A;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:16px 24px;border:1px solid rgba(255,255,255,.14)" style-hover="color:#fff;text-decoration:none;background:#000">{{ telefonoPrincipal }}</a>
+        <a href="{{ waHref }}" target="_blank" rel="noopener" style="background:#25D366;color:#0B2C17;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:16px 24px;border:1px solid rgba(0,0,0,.2)" style-hover="text-decoration:none;filter:brightness(1.06);color:#0B2C17">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProductos }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E">Catálogo</p>
+      <h1 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Productos</h1>
+      <p style="margin:18px 0 0;max-width:62ch;font-size:17px;line-height:1.6;color:#C6CDD4">Equipo contra incendio, protección personal, señalización, rescate y detección. Todo se cotiza bajo pedido: agregue lo que necesite a su lista y la enviamos por WhatsApp.</p>
+    </div>
+  </section>
+
+  <sc-if value="{{ catIndex }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="11">
+          <button onClick="{{ c.open }}" style="text-align:left;background:#23282E;border:1px solid {{ c.bd }};padding:0;cursor:pointer" style-hover="border:1px solid #CE1B1B">
+            <sc-if value="{{ c.img }}" hint-placeholder-val="{{ false }}"><span role="img" aria-label="{{ c.alt }}" style="display:block;width:100%;height:150px;background-color:#2B3138;background-image:{{ c.bg }};background-size:cover;background-position:center;border-bottom:1px solid rgba(255,255,255,.08)"></span></sc-if>
+            <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}"><span role="img" aria-label="{{ c.alt }}" style="display:flex;align-items:center;justify-content:center;height:150px;background:repeating-linear-gradient(45deg,#2B3138 0 10px,#252A30 10px 20px);border-bottom:1px solid rgba(255,255,255,.08)">
+              <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9AA3AD;padding:0 12px;text-align:center">{{ c.ph }}</span>
+            </span></sc-if>
+            <span style="display:block;padding:20px 22px 22px">
+              <span style="display:block;font-family:Oswald,sans-serif;font-weight:600;font-size:19px;letter-spacing:.03em;text-transform:uppercase;color:#F5F6F7;line-height:1.15">{{ c.name }}</span>
+              <span style="display:block;margin-top:9px;font-size:14px;line-height:1.55;color:#9AA3AD">{{ c.short }}</span>
+              <span style="display:block;margin-top:14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#CE1B1B">{{ c.countLabel }}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ catView }}" hint-placeholder-val="{{ false }}">
+    <section style="background:#2B3138;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div style="max-width:1320px;margin:0 auto;padding:clamp(28px,4vw,48px) 16px">
+        <button onClick="{{ backToIndex }}" style="background:none;border:1px solid rgba(255,255,255,.14);color:#C6CDD4;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;cursor:pointer;margin-bottom:22px" style-hover="color:#fff;border:1px solid #CE1B1B">← Todas las categorías</button>
+        <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(26px,4.2vw,44px);line-height:1.05;letter-spacing:-.01em;text-transform:uppercase;color:#F5F6F7">{{ activeCat.name }}</h2>
+        <p style="margin:14px 0 0;max-width:68ch;font-size:16px;line-height:1.6;color:#D2D8DE">{{ activeCat.desc }}</p>
+        <sc-if value="{{ activeCat.hasNote }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:16px 0 0;display:inline-block;background:rgba(242,176,30,.12);border:1px solid rgba(242,176,30,.4);color:#F2B01E;font-size:14px;line-height:1.5;padding:10px 14px;max-width:62ch">{{ activeCat.note }}</p>
+        </sc-if>
+      </div>
+    </section>
+
+    <sc-if value="{{ isExtintores }}" hint-placeholder-val="{{ false }}">
+      <section style="background:#23282E;border-bottom:1px solid rgba(255,255,255,.08)">
+        <div style="max-width:1320px;margin:0 auto;padding:clamp(24px,3.5vw,40px) 16px">
+          <h3 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:600;font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7">Elija por tipo de fuego y aplicación</h3>
+          <p style="margin:0 0 20px;font-size:15px;color:#9AA3AD">Así es como se decide en planta: primero qué se puede quemar, después la capacidad.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px">
+            <sc-for list="{{ extSubs }}" as="s" hint-placeholder-count="8">
+              <button onClick="{{ s.pick }}" aria-pressed="{{ s.on }}" style="text-align:left;background:{{ s.bg }};border:1px solid {{ s.bd }};padding:16px 18px;cursor:pointer" style-hover="border:1px solid #CE1B1B">
+                <span style="display:block;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:{{ s.color }};line-height:1.2">{{ s.name }}</span>
+                <span style="display:block;margin-top:7px;font-size:13.5px;line-height:1.45;color:#9AA3AD">{{ s.agente }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(28px,4vw,48px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:32px">
+      <aside aria-label="Filtros" style="max-width:320px">
+        <label style="display:block;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD;margin-bottom:8px" for="preseq-buscador">Buscador</label>
+        <input id="preseq-buscador" type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Extintor PQS 6 kg" style="width:100%;background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:15px;padding:13px 14px" />
+
+        <p style="margin:26px 0 10px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD">Categoría</p>
+        <div style="display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.08)">
+          <sc-for list="{{ catFilterList }}" as="c" hint-placeholder-count="11">
+            <button onClick="{{ c.open }}" style="text-align:left;background:{{ c.bg }};border:0;border-bottom:1px solid rgba(255,255,255,.08);color:{{ c.color }};font-size:14px;padding:11px 8px;cursor:pointer" style-hover="color:#fff">{{ c.name }}</button>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ hasAgenteFilter }}" hint-placeholder-val="{{ false }}">
+          <div>
+            <p style="margin:26px 0 10px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD">Agente o línea</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ agenteChips }}" as="a" hint-placeholder-count="5">
+                <button onClick="{{ a.toggle }}" aria-pressed="{{ a.on }}" style="background:{{ a.bg }};border:1px solid {{ a.bd }};color:{{ a.color }};font-size:13px;padding:8px 12px;cursor:pointer">{{ a.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <p style="margin:26px 0 10px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD">Presentación</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ capChips }}" as="a" hint-placeholder-count="3">
+            <button onClick="{{ a.toggle }}" aria-pressed="{{ a.on }}" style="background:{{ a.bg }};border:1px solid {{ a.bd }};color:{{ a.color }};font-size:13px;padding:8px 12px;cursor:pointer">{{ a.label }}</button>
+          </sc-for>
+        </div>
+
+        <p style="margin:26px 0 10px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD">Norma aplicable</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ normaChips }}" as="a" hint-placeholder-count="4">
+            <button onClick="{{ a.toggle }}" aria-pressed="{{ a.on }}" style="background:{{ a.bg }};border:1px solid {{ a.bd }};color:{{ a.color }};font-size:13px;padding:8px 12px;cursor:pointer">{{ a.label }}</button>
+          </sc-for>
+        </div>
+
+        <button onClick="{{ clearFilters }}" style="margin-top:24px;background:none;border:1px solid rgba(255,255,255,.14);color:#9AA3AD;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:11px 14px;cursor:pointer;width:100%" style-hover="color:#fff;border:1px solid #CE1B1B">Limpiar filtros</button>
+      </aside>
+
+      <div style="min-width:0">
+        <p style="margin:0 0 18px;font-size:14px;color:#9AA3AD">{{ resultLabel }}</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:18px">
+          <sc-for list="{{ products }}" as="p" hint-placeholder-count="6">
+            <article style="background:#2B3138;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column">
+              <sc-if value="{{ p.img }}" hint-placeholder-val="{{ false }}"><div role="img" aria-label="{{ p.alt }}" style="width:100%;height:170px;background-color:#2B3138;background-image:{{ p.bg }};background-size:cover;background-position:center"></div></sc-if>
+              <sc-if value="{{ p.noImg }}" hint-placeholder-val="{{ true }}"><div role="img" aria-label="{{ p.alt }}" style="display:flex;align-items:center;justify-content:center;height:170px;background:repeating-linear-gradient(45deg,#F5F6F7 0 12px,#E6E8EA 12px 24px)">
+                <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#5A6169;text-align:center;padding:0 12px">Foto de producto</span>
+              </div></sc-if>
+              <div style="padding:18px;display:flex;flex-direction:column;gap:12px;flex:1 1 auto">
+                <h3 style="margin:0;font-family:Oswald,sans-serif;font-weight:500;font-size:17px;line-height:1.2;letter-spacing:.01em;color:#F5F6F7">{{ p.name }}</h3>
+                <p style="margin:0;font-size:14px;line-height:1.5;color:#9AA3AD">{{ p.uso }}</p>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <sc-for list="{{ p.caps }}" as="cap" hint-placeholder-count="3">
+                    <span style="background:#14171A;border:1px solid rgba(255,255,255,.1);color:#C6CDD4;font-size:12px;padding:5px 9px">{{ cap }}</span>
+                  </sc-for>
+                </div>
+                <span style="align-self:flex-start;background:rgba(242,176,30,.12);border:1px solid rgba(242,176,30,.45);color:#F2B01E;font-family:Oswald,sans-serif;font-size:11px;letter-spacing:.09em;text-transform:uppercase;padding:5px 9px">{{ p.norma }}</span>
+                <div style="flex:1 1 auto"></div>
+                <button onClick="{{ p.add }}" style="background:{{ p.btnBg }};border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.07em;text-transform:uppercase;padding:13px;cursor:pointer;width:100%" style-hover="filter:brightness(1.14)">{{ p.btnLabel }}</button>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+        <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:40px 0;color:#9AA3AD;font-size:16px">Sin resultados con esos filtros. Escríbanos por WhatsApp y lo buscamos en catálogo completo.</p>
+        </sc-if>
+        <p style="margin:28px 0 0;font-size:12px;color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase">Por confirmar con el cliente: fotografía de producto, fichas técnicas y claves por modelo</p>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRecargas }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:linear-gradient(90deg,rgba(26,30,34,.97) 0%,rgba(26,30,34,.88) 50%,rgba(26,30,34,.55) 100%),url(assets/stock/recarga-cilindros.webp) center/cover no-repeat,#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,84px) 16px">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E">Servicio recurrente</p>
+      <h1 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Recargas y mantenimiento</h1>
+      <p style="margin:18px 0 26px;max-width:64ch;font-size:17px;line-height:1.6;color:#C6CDD4">Taller propio en Morelia con dictamen vigente. Su extintor regresa con prueba, etiqueta de servicio y garantía por escrito.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(242,176,30,.35)">
+        <sc-for list="{{ credRecarga }}" as="c" hint-placeholder-count="3">
+          <div style="background:#14171A;padding:20px">
+            <p style="margin:0;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#F2B01E;line-height:1.25">{{ c.titulo }}</p>
+            <p style="margin:8px 0 0;font-size:14.5px;line-height:1.55;color:#C6CDD4">{{ c.detalle }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:12px 0 0;font-size:12px;color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase">Por confirmar: dependencia que emite el registro {{ registro }}</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">01 · Agentes</p>
+    <h2 style="margin:0 0 8px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);text-transform:uppercase;color:#F5F6F7">Ocho agentes que recargamos</h2>
+    <p style="margin:0 0 26px;font-size:16px;color:#9AA3AD;max-width:60ch">Si su equipo no está en la lista, mándenos la foto de la etiqueta por WhatsApp y le confirmamos.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ agentesRecarga }}" as="a" hint-placeholder-count="8">
+        <div style="background:#23282E;padding:22px 20px">
+          <p style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:17px;letter-spacing:.04em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ a.name }}</p>
+          <p style="margin:9px 0 0;font-size:14.5px;line-height:1.55;color:#9AA3AD">{{ a.uso }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#1A1E22;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+      <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">02 · Proceso</p>
+      <h2 style="margin:0 0 26px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);text-transform:uppercase;color:#F5F6F7">Cómo trabajamos su equipo</h2>
+      <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+        <sc-for list="{{ pasosRecarga }}" as="p" hint-placeholder-count="4">
+          <li style="background:#23282E;padding:26px 22px">
+            <p style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:34px;line-height:1;color:#CE1B1B">{{ p.n }}</p>
+            <p style="margin:14px 0 0;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:#F5F6F7">{{ p.title }}</p>
+            <p style="margin:8px 0 0;font-size:14.5px;line-height:1.55;color:#9AA3AD">{{ p.desc }}</p>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+      <div style="background:#23282E;border:1px solid rgba(255,255,255,.08);padding:clamp(24px,3.5vw,40px)">
+        <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">03 · Programa anual</p>
+        <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(23px,3vw,32px);text-transform:uppercase;color:#F5F6F7;line-height:1.1">Nunca más un extintor vencido</h2>
+        <p style="margin:16px 0 0;font-size:16.5px;line-height:1.6;color:#C6CDD4">Levantamos el inventario de su inmueble con ubicación y fecha de vencimiento de cada equipo. Nosotros le avisamos cuando toca la recarga y programamos la visita: usted no vuelve a llevar el control.</p>
+        <ul style="list-style:none;margin:22px 0 0;padding:0">
+          <sc-for list="{{ programa }}" as="p" hint-placeholder-count="4">
+            <li style="display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+              <span aria-hidden="true" style="flex:0 0 auto;width:12px;height:12px;border:2px solid #CE1B1B;margin-top:4px"></span>
+              <span style="font-size:15.5px;line-height:1.5;color:#F5F6F7">{{ p }}</span>
+            </li>
+          </sc-for>
+        </ul>
+        <a href="{{ waRecarga }}" target="_blank" rel="noopener" style="display:inline-block;margin-top:26px;background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:16px 26px" style-hover="color:#fff;text-decoration:none;filter:brightness(1.12)">Programar recarga por WhatsApp</a>
+      </div>
+
+      <div style="background:#14171A;border:1px dashed rgba(242,176,30,.55);padding:clamp(24px,3.5vw,40px)">
+        <p style="margin:0 0 6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#F2B01E">Marcador · pendiente de confirmar</p>
+        <h2 style="margin:0 0 20px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(21px,2.8vw,28px);text-transform:uppercase;color:#F5F6F7;line-height:1.15">Condiciones de servicio</h2>
+        <sc-for list="{{ pendientesRecarga }}" as="p" hint-placeholder-count="3">
+          <div style="padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+            <p style="margin:0;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#9AA3AD">{{ p.label }}</p>
+            <p style="margin:8px 0 0;font-size:16px;line-height:1.5;color:#F5F6F7">{{ p.valor }}</p>
+          </div>
+        </sc-for>
+        <p style="margin:20px 0 0;font-size:14px;line-height:1.55;color:#9AA3AD">Estos tres datos son los que más pregunta el cliente por teléfono. Al confirmarlos se vuelven texto de venta en esta misma página.</p>
+      </div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCapacitaciones }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:linear-gradient(90deg,rgba(26,30,34,.97) 0%,rgba(26,30,34,.88) 50%,rgba(26,30,34,.55) 100%),url(assets/stock/brigada.webp) center 35%/cover no-repeat,#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,84px) 16px">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E">Formación</p>
+      <h1 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Capacitaciones</h1>
+      <p style="margin:18px 0 0;max-width:62ch;font-size:17px;line-height:1.6;color:#C6CDD4">Cursos de Protección Civil para brigadas y capacitación normativa STPS, en sus instalaciones o en aula.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">01 · Protección Civil</p>
+    <h2 style="margin:0 0 8px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);text-transform:uppercase;color:#F5F6F7">Siete cursos para su brigada</h2>
+    <p style="margin:0 0 26px;font-size:16px;color:#9AA3AD;max-width:58ch">Con práctica en sitio y enfoque en el riesgo real de su inmueble.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:18px">
+      <sc-for list="{{ cursosPC }}" as="c" hint-placeholder-count="7">
+        <article style="background:#23282E;border:1px solid rgba(255,255,255,.08);padding:24px;display:flex;flex-direction:column;gap:12px">
+          <h3 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:18px;letter-spacing:.03em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ c.name }}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.55;color:#C6CDD4">{{ c.desc }}</p>
+          <p style="margin:0;font-size:14px;line-height:1.5;color:#9AA3AD"><span style="color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.06em;text-transform:uppercase;font-size:12px">Para quién · </span>{{ c.para }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="background:#14171A;border:1px dashed rgba(242,176,30,.5);color:#F2B01E;font-size:12px;padding:5px 9px">{{ duracionCursos }}</span>
+            <span style="background:#14171A;border:1px dashed rgba(242,176,30,.5);color:#F2B01E;font-size:12px;padding:5px 9px">{{ modalidadCursos }}</span>
+            <span style="background:#14171A;border:1px dashed rgba(242,176,30,.5);color:#F2B01E;font-size:12px;padding:5px 9px">{{ cupoCursos }}</span>
+          </div>
+          <div style="flex:1 1 auto"></div>
+          <a href="{{ c.wa }}" target="_blank" rel="noopener" style="display:block;text-align:center;background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.07em;text-transform:uppercase;padding:13px" style-hover="color:#fff;text-decoration:none;filter:brightness(1.12)">Agendar capacitación</a>
+        </article>
+      </sc-for>
+    </div>
+    <p style="margin:18px 0 0;font-size:12px;color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase">Por confirmar: duración, modalidad y cupo por curso; constancia DC-3 y registro como agente capacitador externo</p>
+  </section>
+
+  <section style="background:#1A1E22;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px">
+      <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">02 · Cumplimiento STPS</p>
+      <h2 style="margin:0 0 8px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);text-transform:uppercase;color:#F5F6F7">Diez normas, con su ficha</h2>
+      <p style="margin:0 0 26px;font-size:16px;color:#9AA3AD;max-width:62ch">Cada ficha responde qué exige la norma, a quién aplica, qué curso la cubre y qué producto necesita para cumplirla.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px">
+        <sc-for list="{{ noms }}" as="n" hint-placeholder-count="10">
+          <button onClick="{{ n.open }}" style="text-align:left;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:20px;cursor:pointer" style-hover="border:1px solid #F2B01E">
+            <span style="display:block;font-family:Oswald,sans-serif;font-weight:600;font-size:19px;letter-spacing:.05em;color:#F2B01E">{{ n.id }}</span>
+            <span style="display:block;margin-top:8px;font-size:15px;line-height:1.5;color:#F5F6F7">{{ n.titulo }}</span>
+            <span style="display:block;margin-top:14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#CE1B1B">Ver ficha →</span>
+          </button>
+        </sc-for>
+      </div>
+      <p style="margin:18px 0 0;font-size:12px;color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase">Los años de cada norma se verifican contra la versión vigente en el DOF antes de publicar</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">03 · Por giro</p>
+    <h2 style="margin:0 0 8px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,38px);text-transform:uppercase;color:#F5F6F7">¿Qué norma me aplica?</h2>
+    <p style="margin:0 0 26px;font-size:16px;color:#9AA3AD">Referencia orientativa. El alcance final se define en el levantamiento.</p>
+    <div style="border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ giros }}" as="g" hint-placeholder-count="7">
+        <div style="border-bottom:1px solid rgba(255,255,255,.08)">
+          <button onClick="{{ g.toggle }}" aria-expanded="{{ g.on }}" style="width:100%;text-align:left;background:{{ g.bg }};border:0;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:17px;letter-spacing:.05em;text-transform:uppercase;padding:20px;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center" style-hover="background:#23282E">
+            <span>{{ g.name }}</span>
+            <span aria-hidden="true" style="color:#CE1B1B;font-size:20px;line-height:1">{{ g.sign }}</span>
+          </button>
+          <sc-if value="{{ g.on }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 20px 22px">
+              <p style="margin:0 0 12px;font-size:16px;line-height:1.6;color:#C6CDD4;max-width:72ch">{{ g.detalle }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ g.normas }}" as="nn" hint-placeholder-count="4">
+                  <span style="background:rgba(242,176,30,.12);border:1px solid rgba(242,176,30,.45);color:#F2B01E;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.07em;padding:6px 10px">{{ nn }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNorma }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,56px) 16px">
+      <button onClick="{{ goCapacitaciones }}" style="background:none;border:1px solid rgba(255,255,255,.14);color:#C6CDD4;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;cursor:pointer;margin-bottom:22px" style-hover="color:#fff;border:1px solid #CE1B1B">← Todas las normas</button>
+      <p style="margin:0 0 12px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3.4vw,34px);letter-spacing:.05em;color:#F2B01E">{{ activeNom.id }}</p>
+      <h1 style="margin:0;max-width:24ch;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(28px,4.6vw,50px);line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;color:#F5F6F7">{{ activeNom.titulo }}</h1>
+      <p style="margin:16px 0 0;font-size:12px;color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase">Año de la norma editable · verificar versión vigente en el DOF</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,56px) 16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <div style="background:#23282E;padding:clamp(22px,3vw,34px)">
+        <h2 style="margin:0 0 12px;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#CE1B1B">Qué exige</h2>
+        <p style="margin:0;font-size:16.5px;line-height:1.65;color:#F5F6F7">{{ activeNom.exige }}</p>
+      </div>
+      <div style="background:#23282E;padding:clamp(22px,3vw,34px)">
+        <h2 style="margin:0 0 12px;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#CE1B1B">A quién aplica</h2>
+        <p style="margin:0;font-size:16.5px;line-height:1.65;color:#F5F6F7">{{ activeNom.aplica }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:0 16px clamp(40px,6vw,72px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+      <div style="background:#1A1E22;border:1px solid rgba(255,255,255,.08);border-top:3px solid #CE1B1B;padding:clamp(22px,3vw,34px)">
+        <h2 style="margin:0 0 10px;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD">Curso que la cubre</h2>
+        <p style="margin:0 0 18px;font-family:Oswald,sans-serif;font-weight:600;font-size:21px;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ activeNom.curso }}</p>
+        <button onClick="{{ goCapacitaciones }}" style="background:transparent;border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.07em;text-transform:uppercase;padding:14px 22px;cursor:pointer" style-hover="background:#F5F6F7;color:#14171A">Ver capacitación</button>
+      </div>
+      <div style="background:#1A1E22;border:1px solid rgba(255,255,255,.08);border-top:3px solid #F2B01E;padding:clamp(22px,3vw,34px)">
+        <h2 style="margin:0 0 10px;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#9AA3AD">Qué necesita para cumplir</h2>
+        <p style="margin:0 0 18px;font-family:Oswald,sans-serif;font-weight:600;font-size:21px;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ activeNom.producto }}</p>
+        <button onClick="{{ activeNom.goProducto }}" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.07em;text-transform:uppercase;padding:14px 22px;cursor:pointer" style-hover="filter:brightness(1.12)">{{ activeNom.ctaProducto }}</button>
+      </div>
+    </div>
+    <div style="margin-top:20px;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:clamp(22px,3vw,32px);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between">
+      <p style="margin:0;font-size:16.5px;line-height:1.6;color:#C6CDD4;max-width:56ch">¿Le llegó una notificación de inspección o no sabe por dónde empezar? Levantamos el diagnóstico y le entregamos la documentación que exige la norma.</p>
+      <a href="{{ waNorma }}" target="_blank" rel="noopener" style="background:#25D366;color:#0B2C17;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding:15px 22px;border:1px solid rgba(0,0,0,.2)" style-hover="text-decoration:none;color:#0B2C17;filter:brightness(1.06)">Consultar {{ activeNom.id }}</a>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isConsultoria }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:linear-gradient(90deg,rgba(26,30,34,.97) 0%,rgba(26,30,34,.88) 50%,rgba(26,30,34,.55) 100%),url(assets/stock/extintor-muro.webp) center 40%/cover no-repeat,#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,84px) 16px">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E">Consultoría</p>
+      <h1 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Cumplimiento documentado</h1>
+      <p style="margin:18px 0 0;max-width:64ch;font-size:17px;line-height:1.6;color:#C6CDD4">Protección Civil y Secretaría del Trabajo: programas, estudios, levantamientos y atención a inspección, con entregable firmado.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,52px) 16px 0">
+    <div style="background:#23282E;border:1px solid rgba(206,27,27,.5);border-left:5px solid #CE1B1B;padding:clamp(24px,3.5vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:28px;align-items:center">
+      <div>
+        <p style="margin:0 0 12px;display:inline-block;background:rgba(206,27,27,.18);border:1px solid rgba(206,27,27,.6);color:#FF8A8A;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px">Atención urgente</p>
+        <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(24px,3.6vw,38px);line-height:1.08;text-transform:uppercase;color:#F5F6F7">¿Le llegó una inspección de la STPS?</h2>
+        <p style="margin:16px 0 0;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:54ch">No llene formularios. Escríbanos con la notificación en mano: revisamos el requerimiento, le decimos qué documentación falta y en qué plazo se puede presentar.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="{{ waInspeccion }}" target="_blank" rel="noopener" style="text-align:center;background:#25D366;color:#0B2C17;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:18px 24px;border:1px solid rgba(0,0,0,.2)" style-hover="text-decoration:none;color:#0B2C17;filter:brightness(1.06)">WhatsApp directo</a>
+        <a href="{{ telHref }}" style="text-align:center;background:#14171A;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:18px 24px;border:1px solid rgba(255,255,255,.14)" style-hover="color:#F2B01E;text-decoration:none">Llamar {{ telefonoPrincipal }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,52px) 16px 0">
+    <div style="background:#23282E;border:1px solid rgba(255,255,255,.08);padding:clamp(24px,3.5vw,40px)">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">01 · El punto de partida</p>
+      <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(24px,3.6vw,38px);line-height:1.08;text-transform:uppercase;color:#F5F6F7">Inspección y levantamiento para determinar equipamiento</h2>
+      <p style="margin:16px 0 0;max-width:64ch;font-size:17px;line-height:1.6;color:#C6CDD4">Visitamos su inmueble y determinamos, conforme a las normas de Protección Civil y de la STPS, qué equipo necesita, de qué tipo, en qué cantidad y dónde debe quedar instalado. Aplica a empresas, comercios, escuelas y zonas habitacionales.</p>
+      <p style="margin:14px 0 0;max-width:64ch;font-size:16px;line-height:1.6;color:#9AA3AD">Termina en un listado de equipamiento con ubicación y norma de referencia: ese listado es el que cotizamos.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
+        <button onClick="{{ goContacto }}" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 28px;cursor:pointer" style-hover="filter:brightness(1.12)">Agendar levantamiento</button>
+        <button onClick="{{ goProductos }}" style="background:transparent;border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 28px;cursor:pointer" style-hover="background:#F5F6F7;color:#14171A">Ver catálogo de equipamiento</button>
+      </div>
+      <p style="margin:18px 0 0;font-size:12px;color:#F2B01E;font-family:Oswald,sans-serif;letter-spacing:.1em;text-transform:uppercase">Por confirmar: si el levantamiento inicial es cortesía o tiene costo</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,52px) 16px 0">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">02 · Protección Civil</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ serviciosPC }}" as="s" hint-placeholder-count="4">
+        <div style="background:#23282E;padding:24px 22px">
+          <h3 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:18px;letter-spacing:.03em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ s.name }}</h3>
+          <p style="margin:10px 0 0;font-size:15px;line-height:1.55;color:#9AA3AD">{{ s.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(24px,3.5vw,32px) 16px 0">
+    <div style="background:#1A1E22;border:1px solid rgba(242,176,30,.35);padding:clamp(24px,3.5vw,40px)">
+      <p style="margin:0 0 12px;display:inline-block;background:rgba(242,176,30,.12);border:1px solid rgba(242,176,30,.5);color:#F2B01E;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px">Ingeniería de proceso</p>
+      <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(23px,3.4vw,34px);line-height:1.1;text-transform:uppercase;color:#F5F6F7">Estudios HAZOP · Hazard and Operability Study</h2>
+      <p style="margin:16px 0 0;max-width:64ch;font-size:17px;line-height:1.6;color:#C6CDD4">Análisis sistemático de desviaciones de proceso, nodo por nodo, para identificar peligros y problemas de operabilidad antes de que se conviertan en incidente. Se acompaña de estudio de riesgo y recomendaciones con responsable y plazo.</p>
+      <p style="margin:14px 0 0;max-width:64ch;font-size:16px;line-height:1.6;color:#9AA3AD">Aplicable a plantas de proceso, manejo de sustancias químicas, sistemas de vapor, refrigeración y almacenamiento de combustibles.</p>
+      <div style="margin-top:24px;background:#14171A;border:1px dashed rgba(242,176,30,.55);padding:20px;max-width:64ch">
+        <p style="margin:0 0 6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#F2B01E">Marcador · pendiente de confirmar</p>
+        <p style="margin:0;font-size:16px;line-height:1.55;color:#F5F6F7">{{ liderHazop }}</p>
+        <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#9AA3AD">El nombre y las credenciales de quien firma los estudios venden más que cualquier texto: aquí va su perfil.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,52px) 16px 0">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">03 · Secretaría del Trabajo y Previsión Social</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ serviciosSTPS }}" as="s" hint-placeholder-count="3">
+        <div style="background:#23282E;padding:24px 22px;display:flex;flex-direction:column;gap:10px">
+          <h3 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:18px;letter-spacing:.03em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ s.name }}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.55;color:#9AA3AD">{{ s.desc }}</p>
+          <sc-if value="{{ s.link }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ goCapacitaciones }}" style="align-self:flex-start;background:none;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:11px 14px;cursor:pointer" style-hover="border:1px solid #CE1B1B">Ver capacitaciones →</button>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(32px,4.5vw,52px) 16px clamp(40px,6vw,72px)">
+    <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">04 · Proceso</p>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ pasosConsultoria }}" as="p" hint-placeholder-count="4">
+        <li style="background:#23282E;padding:26px 22px">
+          <p style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:34px;line-height:1;color:#CE1B1B">{{ p.n }}</p>
+          <p style="margin:14px 0 0;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.05em;text-transform:uppercase;color:#F5F6F7">{{ p.title }}</p>
+          <p style="margin:8px 0 0;font-size:14.5px;line-height:1.55;color:#9AA3AD">{{ p.desc }}</p>
+        </li>
+      </sc-for>
+    </ol>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isNosotros }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E">Empresa</p>
+      <h1 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Quiénes somos</h1>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:36px;align-items:start">
+    <div>
+      <h2 style="margin:0 0 16px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">{{ anosTrayectoria }} años en Morelia</h2>
+      <p style="margin:0 0 16px;font-size:17px;line-height:1.65;color:#C6CDD4;max-width:60ch">Desde {{ anoFundacion }} estamos establecidos en Morelia, creciendo junto con nuestros clientes. Somos quien da la cara localmente: entregamos, recargamos, capacitamos y dictaminamos en Michoacán y el Bajío, con taller y personal propio en la ciudad.</p>
+      <p style="margin:0;font-size:17px;line-height:1.65;color:#C6CDD4;max-width:60ch">Trabajamos con fabricantes nacionales, pero la responsabilidad del servicio y del cumplimiento es nuestra.</p>
+    </div>
+    <img src="assets/stock/bombero-equipo.webp" alt="Bombero con equipo completo de protección" style="display:block;width:100%;height:auto;max-height:520px;object-fit:cover;object-position:center 20%;border:1px solid rgba(255,255,255,.08)" />
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:0 16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <div style="background:#23282E;padding:clamp(24px,3vw,36px)">
+        <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-weight:600;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:#CE1B1B">Misión</h2>
+        <p style="margin:0;font-size:17px;line-height:1.65;color:#F5F6F7">Proveer de manera constante y confiable productos y servicios de calidad, otorgando seguridad a su empresa y a su familia.</p>
+      </div>
+      <div style="background:#23282E;padding:clamp(24px,3vw,36px)">
+        <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-weight:600;font-size:20px;letter-spacing:.06em;text-transform:uppercase;color:#CE1B1B">Visión</h2>
+        <p style="margin:0;font-size:17px;line-height:1.65;color:#F5F6F7">Ser el mejor y más confiable proveedor en seguridad industrial, con calidad en nuestros procesos y profesionalismo de nuestro personal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px">
+    <h2 style="margin:0 0 20px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">Cumplimiento verificable</h2>
+    <div style="background:#23282E;border:1px solid rgba(242,176,30,.4);border-left:4px solid #F2B01E;padding:24px;max-width:80ch;margin-bottom:24px">
+      <p style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(17px,2.2vw,22px);letter-spacing:.03em;text-transform:uppercase;color:#F2B01E;line-height:1.15">Dictaminados conforme a NOM-154-SCFI-2005 desde {{ cumplimientoDesde }}</h2>
+      <p style="margin:12px 0 0;font-size:16px;line-height:1.65;color:#F5F6F7">Es la norma que rige a todos los recargadores de extintores del país y no todos la cumplen. Nuestro registro vigente es el {{ registro }}: eso es lo que respalda cada recarga que entregamos. PRESEQ es además marca registrada.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <sc-for list="{{ dependencias }}" as="c" hint-placeholder-count="4">
+        <span style="background:#23282E;border:1px solid rgba(255,255,255,.08);color:#F5F6F7;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.06em;text-transform:uppercase;padding:11px 15px">{{ c }}</span>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background:#1A1E22;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:32px">
+      <div>
+        <h2 style="margin:0 0 20px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">Cobertura</h2>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px">
+          <sc-for list="{{ estados }}" as="e" hint-placeholder-count="8">
+            <li style="display:flex;align-items:center;gap:9px;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:10px 14px;font-size:15px;color:#F5F6F7">
+              <span aria-hidden="true" style="width:9px;height:9px;background:#CE1B1B;display:block"></span>{{ e }}
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+      <div style="background:#14171A;border:1px dashed rgba(242,176,30,.55);padding:clamp(22px,3vw,32px)">
+        <p style="margin:0 0 6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#F2B01E">Marcador · pendiente de autorización</p>
+        <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(20px,2.6vw,26px);text-transform:uppercase;color:#F5F6F7;line-height:1.2">Cliente corporativo de larga relación</h2>
+        <p style="margin:0;font-size:16.5px;line-height:1.6;color:#C6CDD4">{{ clienteAncla }}</p>
+        <p style="margin:12px 0 0;font-size:14px;line-height:1.55;color:#9AA3AD">El uso del nombre y del logotipo requiere autorización escrita del cliente. Mientras llega, se publica la versión genérica.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px">
+    <h2 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">Marcas que distribuimos</h2>
+    <p style="margin:0 0 22px;font-size:15px;color:#9AA3AD">Placas de texto como marcador de posición. Por confirmar: qué marcas siguen vigentes y cuáles autorizan el uso de su logotipo.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+      <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="17">
+        <div style="background:#23282E;padding:22px 14px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100px;text-align:center">
+          <span style="font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ m }}</span>
+          <span style="margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#7E868F">logotipo autorizado pendiente</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isContacto }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="background:#1A1E22;border-bottom:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,64px) 16px">
+      <p style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E">Contacto</p>
+      <h1 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(32px,5.4vw,58px);line-height:1.02;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Hablemos de su cotización</h1>
+      <p style="margin:18px 0 0;max-width:60ch;font-size:17px;line-height:1.6;color:#C6CDD4">Una sola ubicación, atención directa con quien va a dar el servicio.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,56px) 16px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px">
+      <article style="background:#23282E;border:1px solid rgba(255,255,255,.08)">
+        <div role="img" aria-label="Mapa embebido pendiente de Punhuato No. 86, Col. Lomas de Guayangareo, Morelia" style="display:flex;align-items:center;justify-content:center;height:230px;background:repeating-linear-gradient(135deg,#2B3138 0 12px,#252A30 12px 24px);border-bottom:1px solid rgba(255,255,255,.08)">
+          <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9AA3AD;text-align:center;padding:0 16px">Mapa embebido pendiente</span>
+        </div>
+        <div style="padding:26px">
+          <p style="margin:0 0 6px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#CE1B1B">Oficina y taller</p>
+          <h2 style="margin:0 0 12px;font-family:Oswald,sans-serif;font-weight:600;font-size:21px;letter-spacing:.02em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">Punhuato No. 86</h2>
+          <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#C6CDD4">Col. Lomas de Guayangareo, C.P. 58240, Morelia, Michoacán.</p>
+          <p style="margin:0 0 18px;font-size:15px;color:#F2B01E">{{ horario }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <a href="https://maps.google.com/?q=Punhuato+86+Lomas+de+Guayangareo+Morelia" target="_blank" rel="noopener" style="border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.07em;text-transform:uppercase;padding:13px 18px" style-hover="background:#F5F6F7;color:#14171A;text-decoration:none">Cómo llegar</a>
+            <a href="{{ waHref }}" target="_blank" rel="noopener" style="background:#25D366;color:#0B2C17;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.07em;text-transform:uppercase;padding:13px 18px;border:1px solid rgba(0,0,0,.2)" style-hover="text-decoration:none;color:#0B2C17">WhatsApp</a>
+          </div>
+        </div>
+      </article>
+
+      <div style="background:#1A1E22;border:1px solid rgba(255,255,255,.08);padding:26px">
+        <h2 style="margin:0 0 18px;font-family:Oswald,sans-serif;font-weight:600;font-size:19px;letter-spacing:.05em;text-transform:uppercase;color:#F5F6F7">Teléfonos</h2>
+        <sc-for list="{{ telefonos }}" as="t" hint-placeholder-count="3">
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+            <a href="{{ t.href }}" style="font-family:Oswald,sans-serif;font-size:19px;letter-spacing:.04em;color:#F5F6F7" style-hover="color:#F2B01E;text-decoration:none">{{ t.num }}</a>
+            <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#F2B01E;border:1px dashed rgba(242,176,30,.55);padding:5px 8px">{{ t.nota }}</span>
+          </div>
+        </sc-for>
+        <p style="margin:18px 0 0;font-size:14px;line-height:1.6;color:#9AA3AD">Por confirmar: cuál número es el principal, cuál tiene WhatsApp, quién atiende las solicitudes del sitio y en qué horario. También el correo oficial y el dominio definitivo.</p>
+        <p style="margin:14px 0 0;font-size:15px;color:#C6CDD4">{{ correo }}<br />{{ sitioWeb }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1320px;margin:0 auto;padding:0 16px clamp(40px,6vw,72px)">
+    <form onSubmit="{{ onSubmit }}" style="background:#23282E;border:1px solid rgba(255,255,255,.08);padding:clamp(24px,4vw,40px)">
+      <h2 style="margin:0 0 8px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">Formulario de cotización</h2>
+      <p style="margin:0 0 28px;font-size:16px;color:#9AA3AD">Los campos marcados con * son obligatorios.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px">
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Nombre *
+          <input type="text" required="" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Empresa *
+          <input type="text" required="" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Giro
+          <input type="text" placeholder="Industria, comercio, escuela…" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Ciudad y estado *
+          <input type="text" required="" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Teléfono *
+          <input type="tel" required="" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Correo
+          <input type="email" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px" />
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Tipo de necesidad *
+          <select required="" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px">
+            <option>Productos</option>
+            <option>Recarga de extintores</option>
+            <option>Capacitación</option>
+            <option>Consultoría</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4">Adjuntar plano o listado
+          <input type="file" style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#C6CDD4;font-size:14px;padding:11px 12px" />
+        </label>
+      </div>
+      <label style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:#C6CDD4;margin-top:18px">Descripción de la necesidad
+        <textarea rows="5" placeholder="Cantidades, capacidades, ubicación y fecha requerida." style="background:#1A1E22;border:1px solid rgba(255,255,255,.14);color:#F5F6F7;font-size:16px;padding:13px 14px;resize:vertical"></textarea>
+      </label>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px">
+        <button type="submit" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 30px;cursor:pointer" style-hover="filter:brightness(1.12)">Enviar solicitud</button>
+        <span style="font-size:14px;color:#9AA3AD">o escríbanos directo por <a href="{{ waHref }}" target="_blank" rel="noopener">WhatsApp</a></span>
+      </div>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:22px 0 0;background:rgba(242,176,30,.12);border:1px solid rgba(242,176,30,.45);color:#F2B01E;font-size:15px;padding:14px 16px">Boceto: el envío es demostrativo. Falta definir el correo de destino y el aviso de privacidad.</p>
+      </sc-if>
+    </form>
+  </section>
+</div>
+</sc-if>
+
+</main>
+
+<footer style="background:#0F1215;border-top:1px solid rgba(255,255,255,.08)">
+  <div aria-hidden="true" style="height:10px;background:repeating-linear-gradient(135deg,#CE1B1B 0 18px,#14171A 18px 36px)"></div>
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,56px) 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:36px">
+    <div>
+      <img src="assets/preseq-logo.jpeg" alt="PRESEQ — Prevención, Seguridad y Equipamiento" style="height:76px;width:auto;display:block;margin-bottom:18px" />
+      <p style="margin:0;font-size:14px;line-height:1.6;color:#9AA3AD;max-width:32ch">Prevención, Seguridad y Equipamiento. Equipo contra incendio, recarga certificada y cumplimiento normativo en Morelia, Michoacán.</p>
+    </div>
+    <nav aria-label="Productos">
+      <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F5F6F7">Productos</h2>
+      <sc-for list="{{ footerProductos }}" as="f" hint-placeholder-count="5">
+        <button onClick="{{ f.open }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">{{ f.name }}</button>
+      </sc-for>
+    </nav>
+    <nav aria-label="Servicios">
+      <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F5F6F7">Servicios</h2>
+      <button onClick="{{ goRecargas }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Recargas y mantenimiento</button>
+      <button onClick="{{ goCapacitaciones }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Capacitaciones</button>
+      <button onClick="{{ goConsultoria }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Consultoría</button>
+      <button onClick="{{ goConsultoria }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Atención a inspecciones STPS</button>
+    </nav>
+    <nav aria-label="Empresa">
+      <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F5F6F7">Empresa</h2>
+      <button onClick="{{ goNosotros }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Quiénes somos</button>
+      <button onClick="{{ goNosotros }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Cobertura</button>
+      <button onClick="{{ goNosotros }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Marcas</button>
+      <button onClick="{{ goContacto }}" style="display:block;background:none;border:0;padding:5px 0;color:#9AA3AD;font-size:15px;text-align:left;cursor:pointer" style-hover="color:#F5F6F7">Contacto</button>
+    </nav>
+    <div>
+      <h2 style="margin:0 0 14px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#F5F6F7">Contacto</h2>
+      <p style="margin:0 0 14px;font-size:14px;line-height:1.6;color:#9AA3AD">Punhuato No. 86, Col. Lomas de Guayangareo, C.P. 58240, Morelia, Michoacán.</p>
+      <p style="margin:0;font-size:14px;line-height:1.9;color:#C6CDD4">443 320 7106<br />443 445 0138<br />443 209 6241</p>
+      <p style="margin:12px 0 0;font-size:14px;color:#9AA3AD">{{ correo }} · {{ sitioWeb }}</p>
+      <p style="margin:10px 0 0;font-size:14px;color:#9AA3AD">{{ horario }}</p>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1320px;margin:0 auto;padding:22px 16px;display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center">
+      <p style="margin:0;font-size:13px;line-height:1.6;color:#7E868F;max-width:78ch">Equipos dictaminados y garantizados conforme a NOM-002-STPS-2010 y NOM-154-SCFI-2005 · registro vigente {{ registro }} · cumplimiento verificable ante Protección Civil, Secretaría del Trabajo y Previsión Social, Secretaría de Economía y PROFECO.</p>
+      <a href="#" style="font-size:13px;color:#9AA3AD" style-hover="color:#F2B01E">Aviso de privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+  <a href="{{ waHref }}" target="_blank" rel="noopener" aria-label="Cotizar por WhatsApp" style="position:fixed;right:24px;bottom:24px;z-index:70;display:flex;align-items:center;gap:10px;background:#25D366;color:#0B2C17;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:15px 20px;border:1px solid rgba(0,0,0,.25);box-shadow:0 0 0 4px rgba(20,23,26,.9)" style-hover="text-decoration:none;color:#0B2C17;filter:brightness(1.06)">
+    <span aria-hidden="true" style="width:14px;height:14px;border:2px solid #0B2C17;border-radius:50%;display:block"></span>Cotizar
+  </a>
+</sc-if>
+
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:0;right:0;bottom:0;z-index:70;display:grid;grid-template-columns:1fr 1fr;background:#0F1215;border-top:1px solid rgba(255,255,255,.08)">
+    <a href="{{ telHref }}" style="display:block;text-align:center;padding:18px 8px;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;border-right:1px solid rgba(255,255,255,.08)" style-hover="text-decoration:none;color:#F2B01E">Llamar</a>
+    <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:block;text-align:center;padding:18px 8px;background:#25D366;color:#0B2C17;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase" style-hover="text-decoration:none;color:#0B2C17">WhatsApp</a>
+  </div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;anoFundacion&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2004&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Trayectoria&quot;},&quot;anosTrayectoria&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:22,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:1,&quot;max&quot;:60,&quot;unit&quot;:&quot;años&quot;,&quot;section&quot;:&quot;Trayectoria&quot;},&quot;cumplimientoDesde&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2008&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Trayectoria&quot;},&quot;registro&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;3RS 065 2026&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Trayectoria&quot;},&quot;clienteAncla&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Proveedor ininterrumpido de una de las embotelladoras más grandes del país.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Trayectoria&quot;},&quot;telefonoPrincipal&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;443 320 7106&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;524433207106&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;horario&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Horario de atención por confirmar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;correo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Correo oficial por confirmar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;sitioWeb&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Dominio por confirmar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contacto&quot;},&quot;tiempoEntrega&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Por confirmar con el cliente&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Recargas&quot;},&quot;recoleccion&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Por confirmar con el cliente&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Recargas&quot;},&quot;prestamo&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Por confirmar con el cliente&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Recargas&quot;},&quot;duracionCursos&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Duración por confirmar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Capacitaciones&quot;},&quot;modalidadCursos&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Modalidad por confirmar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Capacitaciones&quot;},&quot;cupoCursos&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Cupo por confirmar&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Capacitaciones&quot;},&quot;liderHazop&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Responsable técnico de los estudios HAZOP y de riesgo: nombre, cédula y credenciales por confirmar.&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Consultoría&quot;}}">
+const EXT_SUBS = [
+  { slug: 'oficinas', token: 'PQS', name: 'Oficinas y comercio', agente: 'PQS · polvo químico seco',
+    items: [{ name: 'Extintor PQS portátil', uso: 'Fuego clase A, B y C en oficina, tienda, almacén y vehículo.', caps: ['1 kg', '2.5 kg', '4.5 kg', '6 kg', '9 kg'], norma: 'NOM-002-STPS', cap: 'Portátil' }] },
+  { slug: 'tableros', token: 'CO₂ y HFC-236fa', name: 'Tableros y equipo electrónico', agente: 'CO₂ y agente limpio HFC-236fa',
+    items: [
+      { name: 'Extintor de CO₂', uso: 'Tableros eléctricos, servidores y equipo de medición: no deja residuo.', caps: ['4.5 kg', '6 kg', '9 kg'], norma: 'NOM-002-STPS', cap: 'Portátil' },
+      { name: 'Extintor de agente limpio HFC-236fa', uso: 'Sitios de cómputo y salas de control, sin daño al equipo.', caps: ['1 kg', '2.5 kg', '4.5 kg', '6 kg'], norma: 'NOM-002-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'cocinas', token: 'Clase K', name: 'Cocinas industriales', agente: 'Clase K · acetato de potasio',
+    items: [{ name: 'Extintor clase K', uso: 'Grasas y aceites de cocción. No daña alimentos ni la superficie de trabajo.', caps: ['6 L', '10 L'], norma: 'NOM-002-STPS', cap: 'Portátil' }] },
+  { slug: 'solidos', token: 'Agua y AFFF', name: 'Materiales sólidos y líquidos', agente: 'Agua y agua con espuma AFFF',
+    items: [
+      { name: 'Extintor de agua a presión', uso: 'Papel, madera, textil y sólidos ordinarios.', caps: ['6 L', '10 L'], norma: 'NOM-002-STPS', cap: 'Portátil' },
+      { name: 'Extintor de agua con espuma AFFF', uso: 'Derrames de líquidos inflamables: sella la superficie y evita reignición.', caps: ['6 L', '10 L'], norma: 'NOM-002-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'metales', token: 'Clase D', name: 'Metales', agente: 'Clase D · polvo especial',
+    items: [{ name: 'Extintor clase D', uso: 'Magnesio, aluminio en polvo, sodio y virutas metálicas en taller y fundición.', caps: ['9 kg', 'Unidad móvil'], norma: 'NOM-002-STPS', cap: 'Portátil' }] },
+  { slug: 'litio', token: 'F-500', name: 'Baterías de litio', agente: 'F-500 · encapsulador',
+    items: [{ name: 'Extintor F-500 para baterías de litio', uso: 'Montacargas eléctricos, salas de baterías y almacenes de litio: encapsula y enfría la reacción térmica.', caps: ['6 L', '10 L', 'Unidad móvil'], norma: 'NOM-002-STPS', cap: 'Portátil' }] },
+  { slug: 'automaticos', token: 'Automáticos', name: 'Extintores automáticos', agente: 'HFC-236fa y PQS, con o sin detector',
+    items: [
+      { name: 'Extintor automático de agente limpio', uso: 'Cuartos eléctricos y espacios sin vigilancia: descarga sola al detectar fuego.', caps: ['4.5 kg', '6 kg', 'Con y sin detector de humo'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Extintor automático PQS', uso: 'Cabinas de maquinaria y espacios cerrados de bajo costo de instalación.', caps: ['4.5 kg', '6 kg'], norma: 'NOM-002-STPS', cap: 'Fijo' }
+    ] },
+  { slug: 'moviles', token: 'Unidades móviles', name: 'Unidades móviles', agente: 'Para naves, patios y estaciones',
+    items: [{ name: 'Unidad móvil sobre carretilla', uso: 'Naves industriales, patios de maniobra y estaciones de carga: mayor autonomía y alcance.', caps: ['35 kg', '50 kg', '70 kg'], norma: 'NOM-002-STPS', cap: 'Móvil' }] },
+  { slug: 'refacciones', token: 'Refacciones', name: 'Refacciones originales', agente: 'Válvulas, manómetros y mangueras',
+    items: [{ name: 'Refacciones originales para extintor', uso: 'Válvula, manómetro, manguera, difusor, pasador y sello de garantía.', caps: ['Por pieza'], norma: 'NOM-154-SCFI', cap: 'Portátil' }] }
+];
+
+const CAT_IMG = { extintores: 'extintores-co2', gabinetes: 'gabinete-extintores', epp: 'auditiva', bomberos: 'bombero-era', alturas: 'alturas-fachada', 'primeros-auxilios': 'botiquin', vial: 'chaleco' };
+const PROD_IMG = { 'Extintor PQS portátil': 'extintor-muro', 'Extintor de CO₂': 'extintores-co2', 'Refacciones originales para extintor': 'recarga-cilindros', 'Gabinete para extintor': 'gabinete-extintores', 'Casco de seguridad': 'casco', 'Protección facial y ocular': 'googles', 'Protección auditiva': 'auditiva', 'Protección respiratoria': 'respirador', 'Protección para manos': 'guantes', 'Protección corporal': 'overol', 'Chalecos reflejantes y de malla': 'chaleco', 'Calzado de protección con casquillo': 'botas', 'Ropa desechable y traje encapsulado': 'traje-desechable', 'Traje de aproximación': 'bombero-equipo', 'Casco, monja y guantes de bombero': 'bombero-fuego', 'Equipo de respiración autónoma': 'bombero-era', 'Arnés de cuerpo completo': 'arnes-rappel', 'Líneas de vida, cuerdas y cintas tubulares': 'alturas-fachada', 'Botiquín empresarial': 'botiquin', 'Chaleco de primer respondiente': 'brigada' };
+const imgPath = k => k ? 'assets/stock/' + k + '.webp' : '';
+const imgBg = k => k ? 'url("assets/stock/' + k + '.webp")' : 'none';
+const CATS = [
+  { slug: 'extintores', name: 'Extintores', short: 'Por tipo de fuego: PQS, CO₂, clase K, D, F-500 y automáticos.',
+    desc: 'Elija primero qué se puede quemar en su área y después la capacidad. Todas las presentaciones se entregan con carga inicial y etiqueta de servicio.',
+    ph: 'Foto: extintores en línea', alt: 'Fotografía pendiente de extintores', extintores: true, items: [] },
+  { slug: 'gabinetes', name: 'Gabinetes y herrajes', short: 'Acero inoxidable, hidrante, portaextintores y fijación.',
+    desc: 'Gabinetes de sobreponer en acero inoxidable, gabinetes para extintor con puerta y chapa, gabinete para hidrante, portaextintores, herrajes, fundas y cunas.',
+    ph: 'Foto: gabinete inoxidable', alt: 'Fotografía pendiente de gabinetes y herrajes',
+    items: [
+      { name: 'Gabinete de acero inoxidable de sobreponer', uso: 'Protege el extintor en pasillo y área de producción.', caps: ['GM-1', 'GM-2'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Gabinete para hidrante de 30 m', uso: 'Aloja manguera, chiflón y válvula en red de hidrantes.', caps: ['GM-30'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Gabinete para extintor', uso: 'Con puerta y chapa, para oficina, escuela y comercio.', caps: ['Infantil', 'E-1', 'E-2', 'Modelo 1 y 2'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Portaextintor con cenicero', uso: 'Recepción y áreas de atención al público.', caps: ['Acero pulido', 'Espejo', 'Martillado'], norma: 'Uso comercial', cap: 'Fijo' },
+      { name: 'Herrajes, fundas y cunas', uso: 'Montaje a pared, piso o vehículo.', caps: ['Pared', 'Piso', 'Vehículo'], norma: 'NOM-002-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'senalamientos', name: 'Señalamientos', short: 'NOM-026-STPS y NOM-003-SEGOB, a medida y luminiscentes.',
+    desc: 'Rutas de evacuación, salidas de emergencia, equipo contra incendio, prohibición, obligación, precaución y peligro, sustancias peligrosas, norma armonizada, identificación de tuberías, señalización vial y cintas de delimitación.',
+    note: 'Fabricación a medida: usted define medida, material, pictograma y texto. Disponible en material luminiscente.',
+    ph: 'Foto: señalética instalada', alt: 'Fotografía pendiente de señalamientos',
+    items: [
+      { name: 'Señales de ruta de evacuación y salida', uso: 'Recorrido completo hasta el punto de reunión.', caps: ['20×30 cm', '30×40 cm', 'Luminiscente'], norma: 'NOM-026-STPS', cap: 'Fijo' },
+      { name: 'Señales de equipo contra incendio', uso: 'Identifica extintor, hidrante y estación de alarma.', caps: ['Acrílico', 'PVC', 'Lámina'], norma: 'NOM-026-STPS', cap: 'Fijo' },
+      { name: 'Señales de prohibición, obligación y peligro', uso: 'Serie completa para planta y almacén.', caps: ['Serie completa'], norma: 'NOM-026-STPS', cap: 'Fijo' },
+      { name: 'Identificación de sustancias peligrosas', uso: 'Rombo y sistema armonizado para almacén de químicos.', caps: ['Rombo NFPA', 'Norma armonizada'], norma: 'NOM-018-STPS', cap: 'Fijo' },
+      { name: 'Señalización de protección civil', uso: 'Inmuebles de afluencia pública y escuelas.', caps: ['Luminiscente', 'Estándar'], norma: 'NOM-003-SEGOB', cap: 'Fijo' },
+      { name: 'Placas personalizadas a medida', uso: 'Texto, pictograma y medida definidos por usted.', caps: ['Medida libre', 'Luminiscente'], norma: 'A medida', cap: 'Fijo' }
+    ] },
+  { slug: 'epp', name: 'Equipo de protección personal', short: 'Cabeza, ojos, oído, respiración, manos, cuerpo y pies.',
+    desc: 'EPP para planta, obra y laboratorio, seleccionado según el análisis de riesgos por puesto que exige la NOM-017-STPS.',
+    ph: 'Foto: EPP surtido', alt: 'Fotografía pendiente de equipo de protección personal',
+    items: [
+      { name: 'Casco de seguridad', uso: 'Riesgo de impacto y caída de objetos.', caps: ['10 colores', 'Ala ancha', 'Tipo gorra'], norma: 'NOM-115-STPS', cap: 'Portátil' },
+      { name: 'Protección facial y ocular', uso: 'Partículas, salpicaduras y soldadura.', caps: ['Lentes', 'Goggles', 'Careta para soldar'], norma: 'NOM-115-STPS', cap: 'Portátil' },
+      { name: 'Protección auditiva', uso: 'Áreas con ruido por encima del límite permisible.', caps: ['Tapones', 'Diademas', 'Dispensador'], norma: 'NOM-011-STPS', cap: 'Portátil' },
+      { name: 'Protección respiratoria', uso: 'Polvos, vapores y atmósferas contaminadas.', caps: ['Mascarillas', 'Respirador de cartucho'], norma: 'NOM-116-STPS', cap: 'Portátil' },
+      { name: 'Protección para manos', uso: 'Corte, impacto, químicos y manejo de materiales.', caps: ['Carnaza', 'Nitrilo', 'PU', 'Anticorte', 'TPR'], norma: 'NOM-113-STPS', cap: 'Portátil' },
+      { name: 'Protección corporal', uso: 'Lluvia, calor radiante y alta visibilidad.', caps: ['Impermeables', 'Ponchos', 'Trajes reflejantes', 'Mandiles'], norma: 'NOM-017-STPS', cap: 'Portátil' },
+      { name: 'Chalecos reflejantes y de malla', uso: 'Maniobras, patio y vialidad interna.', caps: ['Multicolor', 'Gorras reflejantes'], norma: 'NOM-017-STPS', cap: 'Portátil' },
+      { name: 'Calzado de protección con casquillo', uso: 'Riesgo de impacto y compresión en pie.', caps: ['Bota industrial', 'Tenis industrial'], norma: 'NOM-113-STPS', cap: 'Portátil' },
+      { name: 'Ropa desechable y traje encapsulado', uso: 'Manejo de químicos y control de partículas.', caps: ['Químicos', 'Partículas'], norma: 'NOM-017-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'bomberos', name: 'Equipo para bomberos', short: 'Trajes de aproximación, mangueras, chiflones y ERA.',
+    desc: 'Equipamiento para brigadas industriales y cuerpos de bomberos municipales.',
+    ph: 'Foto: traje de aproximación', alt: 'Fotografía pendiente de equipo para bomberos',
+    items: [
+      { name: 'Traje de aproximación', uso: 'Combate de incendio estructural e industrial.', caps: ['Chaquetón', 'Pantalón', 'Set completo'], norma: 'NOM-017-STPS', cap: 'Portátil' },
+      { name: 'Casco, monja y guantes de bombero', uso: 'Protección de cabeza, cuello y manos ante calor.', caps: ['Estructural', 'Forestal'], norma: 'NOM-017-STPS', cap: 'Portátil' },
+      { name: 'Manguera contra incendio', uso: 'Red de hidrantes y brigada de ataque.', caps: ['1½"', '2½"', '30 m'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Chiflones y boquillas', uso: 'Chorro directo y niebla según el fuego.', caps: ['Chorro-niebla', 'Automática'], norma: 'NOM-002-STPS', cap: 'Portátil' },
+      { name: 'Equipo de respiración autónoma', uso: 'Atmósferas irrespirables y espacios confinados.', caps: ['Acero', 'Composite'], norma: 'NOM-116-STPS', cap: 'Portátil' },
+      { name: 'Bombas para red de hidrante', uso: 'Presurización de la red contra incendio.', caps: ['Eléctrica', 'Diésel'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Hachas, llaves de coples y herrajes', uso: 'Herramienta de forzamiento y conexión.', caps: ['Set', 'Pieza'], norma: 'Uso industrial', cap: 'Portátil' }
+    ] },
+  { slug: 'alturas', name: 'Rescate y trabajos en altura', short: 'Arneses, cuerdas, descensores y espacios confinados.',
+    desc: 'Sistemas de detención de caídas y rescate técnico conforme a la NOM-009-STPS.',
+    ph: 'Foto: arnés y línea de vida', alt: 'Fotografía pendiente de equipo de rescate y alturas',
+    items: [
+      { name: 'Arnés de cuerpo completo', uso: 'Trabajo en altura y posicionamiento.', caps: ['2 argollas', '4 argollas'], norma: 'NOM-009-STPS', cap: 'Portátil' },
+      { name: 'Líneas de vida, cuerdas y cintas tubulares', uso: 'Anclaje y desplazamiento seguro.', caps: ['11 mm', '13 mm', 'Por metro'], norma: 'NOM-009-STPS', cap: 'Portátil' },
+      { name: 'Mosquetones, descensores y poleas', uso: 'Maniobra de rescate y descenso controlado.', caps: ['Acero', 'Aluminio'], norma: 'NOM-009-STPS', cap: 'Portátil' },
+      { name: 'Casco de rescate', uso: 'Rescate técnico y espacios reducidos.', caps: ['Con y sin visor'], norma: 'NOM-115-STPS', cap: 'Portátil' },
+      { name: 'Equipo para espacios confinados', uso: 'Trípode, winche y monitoreo de atmósfera.', caps: ['Trípode', 'Winche', 'Detector'], norma: 'NOM-033-STPS', cap: 'Móvil' },
+      { name: 'Escalera de escape', uso: 'Evacuación desde niveles superiores.', caps: ['Cadena', 'Rígida'], norma: 'NOM-001-STPS', cap: 'Fijo' }
+    ] },
+  { slug: 'primeros-auxilios', name: 'Primeros auxilios', short: 'Camillas, collarines, férulas y botiquines.',
+    desc: 'Equipo de atención prehospitalaria para brigadas, dimensionado según su plantilla.',
+    ph: 'Foto: camilla y botiquín', alt: 'Fotografía pendiente de equipo de primeros auxilios',
+    items: [
+      { name: 'Camilla rígida con sujetadores', uso: 'Traslado de lesionado con sospecha de fractura.', caps: ['Tabla larga', 'Canastilla'], norma: 'NOM-005-STPS', cap: 'Móvil' },
+      { name: 'Collarines e inmovilizadores', uso: 'Inmovilización cervical y de extremidades.', caps: ['Ajustable', 'Pediátrico'], norma: 'NOM-005-STPS', cap: 'Portátil' },
+      { name: 'Férulas de inmovilización', uso: 'Estabilización en sitio antes del traslado.', caps: ['Set', 'Pieza'], norma: 'NOM-005-STPS', cap: 'Portátil' },
+      { name: 'Botiquín empresarial', uso: 'Dotación por área y número de trabajadores.', caps: ['Básico', 'Intermedio', 'Industrial'], norma: 'NOM-005-STPS', cap: 'Portátil' },
+      { name: 'Chaleco de primer respondiente', uso: 'Identifica a la brigada durante la emergencia.', caps: ['Unitalla'], norma: 'NOM-026-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'deteccion', name: 'Detección y alarmas', short: 'Humo, multigases, paneles y sonorización.',
+    desc: 'Detección temprana y notificación: sin alarma, la evacuación llega tarde.',
+    ph: 'Foto: panel de detección', alt: 'Fotografía pendiente de detección y alarmas',
+    items: [
+      { name: 'Detector de humo', uso: 'Oficinas, pasillos y cuartos técnicos.', caps: ['Fotoeléctrico', 'Iónico'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Detector de oxígeno y multigases', uso: 'Espacios confinados y áreas de proceso.', caps: ['1 gas', '4 gases'], norma: 'NOM-033-STPS', cap: 'Portátil' },
+      { name: 'Sensor de calor', uso: 'Áreas con polvo o vapor donde el humo da falsa alarma.', caps: ['Térmico fijo', 'Termovelocimétrico'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Estación de jalón', uso: 'Activación manual de alarma en ruta de salida.', caps: ['Direccionable', 'Convencional'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Panel de detección y alarma', uso: 'Centraliza zonas y activa la notificación.', caps: ['2 zonas', '4 zonas', 'Direccionable'], norma: 'NOM-002-STPS', cap: 'Fijo' },
+      { name: 'Sonorización y megáfonos', uso: 'Aviso audible en planta y simulacros.', caps: ['Sirena', 'Estrobo', 'Megáfono'], norma: 'NOM-026-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'vial', name: 'Línea industrial vial', short: 'Conos, barricadas, cintas y delimitación.',
+    desc: 'Delimitación de áreas y control de tránsito interno en planta, obra y estacionamiento.',
+    ph: 'Foto: conos y barricadas', alt: 'Fotografía pendiente de línea industrial vial',
+    items: [
+      { name: 'Conos de seguridad', uso: 'Delimitación temporal de maniobras.', caps: ['45 cm', '70 cm', '90 cm'], norma: 'NOM-026-STPS', cap: 'Portátil' },
+      { name: 'Conos plegables', uso: 'Flotillas y cuadrillas en campo.', caps: ['45 cm', '70 cm'], norma: 'NOM-026-STPS', cap: 'Portátil' },
+      { name: 'Barricadas y barreras', uso: 'Cierre de áreas de riesgo y obra.', caps: ['Plástica', 'Metálica'], norma: 'NOM-026-STPS', cap: 'Móvil' },
+      { name: 'Postes delimitadores', uso: 'Carriles peatonales y accesos.', caps: ['Fijo', 'Removible'], norma: 'NOM-026-STPS', cap: 'Fijo' },
+      { name: 'Cintas de precaución y peligro', uso: 'Acordonamiento inmediato.', caps: ['500 m', 'Rollo'], norma: 'NOM-026-STPS', cap: 'Portátil' },
+      { name: 'Banderolas, triángulos y letrero de piso mojado', uso: 'Aviso temporal de riesgo.', caps: ['Pieza', 'Set'], norma: 'NOM-026-STPS', cap: 'Portátil' }
+    ] },
+  { slug: 'accesorios-vial', name: 'Accesorios de seguridad vial', short: 'Topes, boyas y tope personalizado con su logotipo.',
+    desc: 'Accesorios de piso para estacionamientos, fraccionamientos y vialidades internas.',
+    note: 'Los topes de estacionamiento se personalizan con el logotipo del cliente, en reflectividad amarilla o blanca.',
+    ph: 'Foto: tope reductor instalado', alt: 'Fotografía pendiente de accesorios de seguridad vial',
+    items: [
+      { name: 'Tope reductor de velocidad', uso: 'Control de velocidad en acceso y patio.', caps: ['Hule', 'Polímero', 'Por metro'], norma: 'NOM-026-STPS', cap: 'Fijo' },
+      { name: 'Boya ojo de gato', uso: 'Delimitación reflejante de carriles.', caps: ['1 cara', '2 caras'], norma: 'NOM-026-STPS', cap: 'Fijo' },
+      { name: 'Tope de estacionamiento personalizable', uso: 'Cajón de estacionamiento con logotipo del cliente.', caps: ['Reflectividad amarilla', 'Reflectividad blanca'], norma: 'A medida', cap: 'Fijo' }
+    ] }
+];
+
+const NOMS = [
+  { id: 'NOM-001', titulo: 'Edificios, locales e instalaciones', exige: 'Condiciones de seguridad en el centro de trabajo: pisos, escaleras, rampas, barandales, techos y áreas de circulación en buen estado, con mantenimiento documentado.', aplica: 'Todos los centros de trabajo, sin importar giro ni tamaño.', curso: 'Recorridos de verificación y orden y limpieza', producto: 'Señalización de circulación y escaleras de escape', cat: 'senalamientos', cta: 'Ver señalamientos' },
+  { id: 'NOM-002', titulo: 'Prevención y protección contra incendios', exige: 'Clasificación del riesgo de incendio, extintores suficientes y vigentes, brigadas capacitadas, simulacros, plan de atención a emergencias y, según el riesgo, red de hidrantes y detección.', aplica: 'Todos los centros de trabajo; con requisitos mayores en riesgo medio y alto.', curso: 'Prevención de incendios y uso de extintores', producto: 'Extintores, gabinetes y detección', cat: 'extintores', cta: 'Ver extintores' },
+  { id: 'NOM-004', titulo: 'Sistemas de protección de maquinaria', exige: 'Guardas y dispositivos de seguridad en maquinaria y equipo, procedimientos de paro seguro y bloqueo de energía, con programa de mantenimiento.', aplica: 'Centros de trabajo con maquinaria o equipo en movimiento.', curso: 'Seguridad en maquinaria y bloqueo de energía', producto: 'EPP para operación y señalización de riesgo', cat: 'epp', cta: 'Ver protección personal' },
+  { id: 'NOM-009', titulo: 'Trabajos en altura', exige: 'Autorización de trabajo, sistemas de detención de caídas, puntos de anclaje verificados, plan de rescate y capacitación del personal expuesto.', aplica: 'Trabajos a más de 1.80 m de altura: azoteas, andamios, silos, tanques y estructuras.', curso: 'Trabajos en altura y rescate', producto: 'Arneses, líneas de vida y anclajes', cat: 'alturas', cta: 'Ver rescate y alturas' },
+  { id: 'NOM-017', titulo: 'Equipo de protección personal', exige: 'Análisis de riesgos por puesto, selección del EPP adecuado, entrega documentada, capacitación en su uso y reposición cuando se deteriora.', aplica: 'Todo centro de trabajo con exposición a riesgos por puesto.', curso: 'Uso y conservación del equipo de protección personal', producto: 'Equipo de protección personal completo', cat: 'epp', cta: 'Ver protección personal' },
+  { id: 'NOM-018', titulo: 'Sustancias químicas peligrosas', exige: 'Identificación y comunicación de peligros: hojas de datos de seguridad, señalización armonizada en recipientes y capacitación del personal expuesto.', aplica: 'Centros de trabajo que manejan, transportan o almacenan sustancias químicas.', curso: 'Atención a emergencias con materiales peligrosos', producto: 'Señalización de sustancias y norma armonizada', cat: 'senalamientos', cta: 'Ver señalamientos' },
+  { id: 'NOM-019', titulo: 'Comisiones de seguridad e higiene', exige: 'Constitución, integración y funcionamiento de la comisión, con recorridos de verificación, actas y seguimiento de hallazgos.', aplica: 'Todos los centros de trabajo, con integración según número de trabajadores.', curso: 'Integración y operación de la comisión de seguridad e higiene', producto: 'Señalización de recorridos y botiquines', cat: 'primeros-auxilios', cta: 'Ver primeros auxilios' },
+  { id: 'NOM-025', titulo: 'Condiciones de iluminación', exige: 'Niveles mínimos de iluminación por área y tarea, medición con reporte, mantenimiento de luminarias e iluminación de emergencia en rutas de evacuación.', aplica: 'Todos los centros de trabajo.', curso: 'Evacuación de emergencias y rutas señalizadas', producto: 'Señalización luminiscente de evacuación', cat: 'senalamientos', cta: 'Ver señalamientos' },
+  { id: 'NOM-026', titulo: 'Colores y señales de seguridad', exige: 'Colores, formas y pictogramas de seguridad, señalización de rutas de evacuación y equipo contra incendio, e identificación de fluidos conducidos en tuberías.', aplica: 'Todos los centros de trabajo.', curso: 'Evacuación de emergencias', producto: 'Señalamientos fabricados a medida', cat: 'senalamientos', cta: 'Ver señalamientos' },
+  { id: 'NOM-030', titulo: 'Servicios preventivos de seguridad y salud', exige: 'Diagnóstico de las condiciones de seguridad y salud, programa de seguridad y salud en el trabajo, y responsable de los servicios preventivos.', aplica: 'Todos los centros de trabajo; el alcance depende del número de trabajadores.', curso: 'Formación de brigadas y programa de seguridad', producto: 'Consultoría: diagnóstico y documentación', cat: 'consultoria', cta: 'Ver consultoría' }
+];
+
+const CURSOS_PC = [
+  { name: 'Formación de brigadas', desc: 'Estructura, funciones y mando de la brigada multifuncional, con equipamiento mínimo y ejercicio integral.', para: 'Personal designado de planta, escuela o inmueble.' },
+  { name: 'Prevención de incendios', desc: 'Teoría del fuego, clases de fuego, agentes extintores y medidas preventivas por área de riesgo.', para: 'Brigada y supervisores de área.' },
+  { name: 'Uso y manejo de extintores', desc: 'Práctica con fuego real: selección del agente, aproximación y técnica de extinción.', para: 'Todo el personal, por grupos.' },
+  { name: 'Primeros auxilios', desc: 'Valoración inicial, RCP, hemorragias, quemaduras, inmovilización y traslado.', para: 'Brigada de primeros auxilios y servicio médico.' },
+  { name: 'Atención a emergencias de materiales peligrosos', desc: 'Identificación, control de derrames, contención y coordinación con autoridades.', para: 'Personal que maneja o transporta químicos.' },
+  { name: 'Evacuación de emergencias', desc: 'Rutas, puntos de reunión, censo, orden de salida y evaluación del simulacro.', para: 'Brigada de evacuación y responsables por piso.' },
+  { name: 'Búsqueda y rescate', desc: 'Técnicas de búsqueda, arrastres, rescate en espacios reducidos y en altura.', para: 'Brigada de rescate con condición física para la práctica.' }
+];
+
+const GIROS = [
+  { name: 'Industria y manufactura', detalle: 'Mayor carga normativa: maquinaria, químicos y plantilla amplia. Requiere brigadas formadas, programa interno y documentación completa.', normas: ['NOM-001', 'NOM-002', 'NOM-004', 'NOM-009', 'NOM-017', 'NOM-018', 'NOM-019', 'NOM-030'] },
+  { name: 'Comercio y tienda', detalle: 'Afluencia de público y almacén: prioridad en extintores vigentes, señalización y rutas de salida libres.', normas: ['NOM-002', 'NOM-017', 'NOM-026'] },
+  { name: 'Oficina corporativa', detalle: 'Riesgo bajo, obligaciones vigentes: extintores, iluminación de emergencia y comisión de seguridad e higiene.', normas: ['NOM-002', 'NOM-019', 'NOM-025'] },
+  { name: 'Escuela', detalle: 'Población vulnerable: simulacros calendarizados, señalización luminiscente, brigadas de docentes y programa interno.', normas: ['NOM-002', 'NOM-026', 'NOM-003-SEGOB', 'Programa interno'] },
+  { name: 'Restaurante y cocina industrial', detalle: 'Riesgo de fuego por grasas: extintor clase K junto a la línea de cocción, además de la señalización general.', normas: ['NOM-002', 'NOM-026', 'Clase K'] },
+  { name: 'Gasolinera y manejo de combustibles', detalle: 'Atmósferas inflamables y electricidad estática: verificación frecuente y señalización específica de sustancias.', normas: ['NOM-002', 'NOM-018', 'NOM-026'] },
+  { name: 'Fraccionamiento y condominio', detalle: 'Áreas comunes, casetas y estacionamientos: equipamiento determinado por levantamiento de protección civil y programa especial para eventos.', normas: ['NOM-002', 'NOM-026', 'Programa especial'] }
+];
+
+class Component extends DCLogic {
+  state = {
+    page: 'inicio', cat: null, sub: null, nom: null, query: '',
+    agentes: [], caps: [], normas: [], quote: [], quoteOpen: false,
+    menuOpen: false, megaOpen: false, giro: 'Industria y manufactura', sent: false,
+    w: typeof window !== 'undefined' ? window.innerWidth : 1200
+  };
+
+  componentDidMount() {
+    this._r = () => this.setState({ w: window.innerWidth });
+    this._r();
+    requestAnimationFrame(this._r);
+    window.addEventListener('resize', this._r);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this._r); }
+
+  go(page) { this.setState({ page, menuOpen: false, megaOpen: false, cat: null, sub: null, nom: null }); window.scrollTo(0, 0); }
+  openCat(slug, sub) {
+    this.setState({ page: 'productos', cat: slug, sub: sub || null, nom: null, menuOpen: false, megaOpen: false, query: '', agentes: [], caps: [], normas: [] });
+    window.scrollTo(0, 0);
+  }
+  openNom(id) { this.setState({ page: 'norma', nom: id, menuOpen: false, megaOpen: false }); window.scrollTo(0, 0); }
+
+  toggleIn(key, val) {
+    const list = this.state[key];
+    this.setState({ [key]: list.indexOf(val) > -1 ? list.filter(x => x !== val) : list.concat([val]) });
+  }
+
+  wa(msg) {
+    const num = (this.props.whatsapp || '524433207106').replace(/\D/g, '');
+    return 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg);
+  }
+
+  contextMsg() {
+    const s = this.state;
+    if (s.page === 'productos' && s.cat) {
+      const c = CATS.find(x => x.slug === s.cat);
+      const sub = s.sub ? EXT_SUBS.find(x => x.slug === s.sub) : null;
+      if (sub) return 'Hola PRESEQ, necesito cotización de extintores para ' + sub.name.toLowerCase() + '.';
+      return 'Hola PRESEQ, necesito cotización de ' + (c ? c.name.toLowerCase() : 'productos') + '.';
+    }
+    const m = {
+      inicio: 'Hola PRESEQ, quisiera cotización de equipo de seguridad para mi empresa.',
+      productos: 'Hola PRESEQ, necesito cotización de productos de su catálogo.',
+      recargas: 'Hola PRESEQ, quiero programar recarga de extintores.',
+      capacitaciones: 'Hola PRESEQ, quiero agendar una capacitación para mi personal.',
+      norma: 'Hola PRESEQ, tengo dudas sobre el cumplimiento de una NOM de la STPS.',
+      consultoria: 'Hola PRESEQ, necesito apoyo en cumplimiento normativo.',
+      nosotros: 'Hola PRESEQ, me interesa conocer sus servicios.',
+      contacto: 'Hola PRESEQ, necesito hablar con un asesor sobre una cotización.'
+    };
+    return m[s.page] || m.inicio;
+  }
+
+  chip(on) {
+    return on
+      ? { on: true, bg: '#CE1B1B', bd: 'rgba(255,255,255,.2)', color: '#fff' }
+      : { on: false, bg: '#1A1E22', bd: 'rgba(255,255,255,.14)', color: '#C6CDD4' };
+  }
+
+  catItems(cat) {
+    if (!cat) return [];
+    if (!cat.extintores) return cat.items.map(it => Object.assign({ agente: cat.name }, it));
+    const subs = this.state.sub ? EXT_SUBS.filter(s => s.slug === this.state.sub) : EXT_SUBS;
+    return subs.reduce((acc, s) => acc.concat(s.items.map(it => Object.assign({ agente: s.token }, it))), []);
+  }
+
+  renderVals() {
+    const s = this.state, p = this.props;
+    const tel = p.telefonoPrincipal || '443 320 7106';
+    const isDesktop = s.w >= 1180;
+    const activeCat = CATS.find(c => c.slug === s.cat) || null;
+    const registro = p.registro || '3RS 065 2026';
+    const horario = p.horario || 'Horario de atención por confirmar';
+
+    const source = this.catItems(activeCat);
+    const q = s.query.trim().toLowerCase();
+    const products = source.filter(it => {
+      if (q && (it.name + ' ' + it.uso + ' ' + it.caps.join(' ') + ' ' + it.norma).toLowerCase().indexOf(q) === -1) return false;
+      if (s.agentes.length && s.agentes.indexOf(it.agente) === -1) return false;
+      if (s.caps.length && s.caps.indexOf(it.cap) === -1) return false;
+      if (s.normas.length && s.normas.indexOf(it.norma) === -1) return false;
+      return true;
+    }).map(it => {
+      const inQuote = s.quote.indexOf(it.name) > -1;
+      return {
+        name: it.name, uso: it.uso, caps: it.caps, norma: it.norma,
+        alt: PROD_IMG[it.name] ? it.name : 'Fotografía pendiente de ' + it.name.toLowerCase(), img: imgPath(PROD_IMG[it.name]), bg: imgBg(PROD_IMG[it.name]), noImg: !PROD_IMG[it.name],
+        btnLabel: inQuote ? 'Agregado ✓' : 'Agregar a cotización',
+        btnBg: inQuote ? '#3A4149' : 'linear-gradient(135deg,#CE1B1B,#8E1010)',
+        add: () => this.setState({ quote: inQuote ? s.quote.filter(x => x !== it.name) : s.quote.concat([it.name]) })
+      };
+    });
+
+    const capSet = Array.from(new Set(source.map(i => i.cap)));
+    const normaSet = Array.from(new Set(source.map(i => i.norma)));
+    const agenteSet = activeCat && activeCat.extintores
+      ? Array.from(new Set(source.map(i => i.agente)))
+      : [];
+
+    const quoteMsg = s.quote.length
+      ? 'Hola PRESEQ, solicito cotización de:\n' + s.quote.map((n, i) => (i + 1) + '. ' + n).join('\n') + '\n\nEmpresa: \nCiudad: '
+      : this.contextMsg();
+
+    const activeNom = NOMS.find(n => n.id === s.nom) || NOMS[1];
+
+    const navDef = [
+      { label: 'Inicio', page: 'inicio' },
+      { label: 'Productos', page: 'productos' },
+      { label: 'Recargas', page: 'recargas' },
+      { label: 'Capacitaciones', page: 'capacitaciones' },
+      { label: 'Consultoría', page: 'consultoria' },
+      { label: 'Quiénes somos', page: 'nosotros' },
+      { label: 'Contacto', page: 'contacto' }
+    ];
+
+    return {
+      telefonoPrincipal: tel,
+      telHref: 'tel:+52' + tel.replace(/\D/g, ''),
+      waHref: this.wa(this.contextMsg()),
+      quoteWaHref: this.wa(quoteMsg),
+      waLitio: this.wa('Hola PRESEQ, necesito información de extintores F-500 para baterías de litio.'),
+      waRecarga: this.wa('Hola PRESEQ, quiero programar la recarga de mis extintores. Tengo aproximadamente ___ equipos en Morelia.'),
+      waInspeccion: this.wa('Hola PRESEQ, recibí una notificación de inspección de la STPS y necesito apoyo urgente.'),
+      waNorma: this.wa('Hola PRESEQ, necesito cumplir la ' + activeNom.id + ' en mi centro de trabajo.'),
+      correo: p.correo || 'Correo oficial por confirmar',
+      sitioWeb: p.sitioWeb || 'Dominio por confirmar',
+      horario, registro,
+      cumplimientoDesde: p.cumplimientoDesde || '2008',
+      anosTrayectoria: p.anosTrayectoria || 22,
+      anoFundacion: p.anoFundacion || '2004',
+      clienteAncla: p.clienteAncla || 'Proveedor ininterrumpido de una de las embotelladoras más grandes del país.',
+      duracionCursos: p.duracionCursos || 'Duración por confirmar',
+      modalidadCursos: p.modalidadCursos || 'Modalidad por confirmar',
+      cupoCursos: p.cupoCursos || 'Cupo por confirmar',
+      liderHazop: p.liderHazop || 'Responsable técnico de los estudios HAZOP y de riesgo: nombre, cédula y credenciales por confirmar.',
+
+      isDesktop, isMobile: !isDesktop,
+      isInicio: s.page === 'inicio', isProductos: s.page === 'productos',
+      isRecargas: s.page === 'recargas', isCapacitaciones: s.page === 'capacitaciones',
+      isNorma: s.page === 'norma', isConsultoria: s.page === 'consultoria',
+      isNosotros: s.page === 'nosotros', isContacto: s.page === 'contacto',
+      catIndex: s.page === 'productos' && !s.cat,
+      catView: s.page === 'productos' && !!s.cat,
+      isExtintores: !!activeCat && !!activeCat.extintores,
+
+      nav: navDef.map(n => ({
+        label: n.label,
+        current: s.page === n.page ? 'page' : undefined,
+        bd: s.page === n.page ? '#CE1B1B' : 'transparent',
+        color: s.page === n.page ? '#fff' : '#F5F6F7',
+        go: () => {
+          if (n.page === 'productos' && this.state.w >= 1180) this.setState({ megaOpen: !this.state.megaOpen });
+          else this.go(n.page);
+        }
+      })),
+      goInicio: () => this.go('inicio'),
+      goProductos: () => this.go('productos'),
+      goRecargas: () => this.go('recargas'),
+      goCapacitaciones: () => this.go('capacitaciones'),
+      goConsultoria: () => this.go('consultoria'),
+      goNosotros: () => this.go('nosotros'),
+      goContacto: () => this.go('contacto'),
+      goLitio: () => this.openCat('extintores', 'litio'),
+      backToIndex: () => this.setState({ cat: null, sub: null, query: '', agentes: [], caps: [], normas: [] }),
+
+      megaOpen: s.megaOpen, menuOpen: s.menuOpen,
+      toggleMenu: () => this.setState({ menuOpen: !s.menuOpen }),
+      toggleQuote: () => this.setState({ quoteOpen: !s.quoteOpen }),
+      quoteOpen: s.quoteOpen, quoteCount: s.quote.length, quoteEmpty: s.quote.length === 0,
+      quote: s.quote.map(n => {
+        const cat = CATS.find(c => (c.items || []).some(i => i.name === n));
+        const sub = EXT_SUBS.find(x => x.items.some(i => i.name === n));
+        return { name: n, cat: cat ? cat.name : (sub ? 'Extintores · ' + sub.name : ''), remove: () => this.setState({ quote: this.state.quote.filter(x => x !== n) }) };
+      }),
+
+      cats: CATS.map(c => ({
+        name: c.name, short: c.short, ph: c.ph, alt: c.alt, img: imgPath(CAT_IMG[c.slug]), bg: imgBg(CAT_IMG[c.slug]), noImg: !CAT_IMG[c.slug],
+        bd: c.slug === 'extintores' ? 'rgba(206,27,27,.45)' : 'rgba(255,255,255,.08)',
+        countLabel: c.extintores ? '9 líneas por tipo de fuego' : c.items.length + ' líneas',
+        open: () => this.openCat(c.slug)
+      })),
+      catFilterList: CATS.map(c => ({
+        name: c.name,
+        bg: c.slug === s.cat ? '#CE1B1B' : 'transparent',
+        color: c.slug === s.cat ? '#fff' : '#C6CDD4',
+        open: () => this.openCat(c.slug)
+      })),
+      activeCat: activeCat
+        ? { name: activeCat.name, desc: activeCat.desc, note: activeCat.note || '', hasNote: !!activeCat.note }
+        : { name: '', desc: '', note: '', hasNote: false },
+      extSubs: EXT_SUBS.map(x => Object.assign(
+        { name: x.name, agente: x.agente, pick: () => this.openCat('extintores', s.sub === x.slug ? null : x.slug) },
+        x.slug === s.sub
+          ? { on: true, bg: '#CE1B1B', bd: 'rgba(255,255,255,.2)', color: '#fff' }
+          : { on: false, bg: '#1A1E22', bd: 'rgba(255,255,255,.12)', color: '#F5F6F7' }
+      )),
+      hasAgenteFilter: agenteSet.length > 1,
+      products, noResults: products.length === 0,
+      resultLabel: products.length + (products.length === 1 ? ' producto' : ' productos') + ' · cotización bajo pedido',
+      query: s.query,
+      onQuery: e => this.setState({ query: e.target.value }),
+      agenteChips: agenteSet.map(a => Object.assign({ label: a, toggle: () => this.toggleIn('agentes', a) }, this.chip(s.agentes.indexOf(a) > -1))),
+      capChips: capSet.map(a => Object.assign({ label: a, toggle: () => this.toggleIn('caps', a) }, this.chip(s.caps.indexOf(a) > -1))),
+      normaChips: normaSet.map(a => Object.assign({ label: a, toggle: () => this.toggleIn('normas', a) }, this.chip(s.normas.indexOf(a) > -1))),
+      clearFilters: () => this.setState({ query: '', agentes: [], caps: [], normas: [] }),
+
+      credenciales: [
+        { titulo: 'NOM-002-STPS-2010 · NOM-154-SCFI-2005', detalle: 'Equipos dictaminados y garantizados conforme a ambas normas.' },
+        { titulo: 'Cumplimiento desde ' + (p.cumplimientoDesde || '2008'), detalle: 'Taller con dictamen ininterrumpido: no todos los recargadores lo tienen.' },
+        { titulo: 'Registro vigente ' + registro, detalle: 'Verificable. Dependencia emisora por confirmar.' },
+        { titulo: (p.anosTrayectoria || 22) + ' años en Morelia', detalle: 'Desde ' + (p.anoFundacion || '2004'), }
+      ],
+      accesos: [
+        { title: 'Productos', desc: 'Extintores por tipo de fuego, EPP, señalización, rescate y detección.', radius: '0', go: () => this.go('productos') },
+        { title: 'Recargas y mantenimiento', desc: 'Taller dictaminado, ocho agentes y programa anual calendarizado.', radius: '50%', go: () => this.go('recargas') },
+        { title: 'Capacitación y consultoría', desc: 'Brigadas, NOM de la STPS, programas internos y estudios de riesgo.', radius: '0 50% 0 50%', go: () => this.go('capacitaciones') }
+      ],
+      checklist: [
+        'Extintores con carga vigente y etiqueta de servicio legible',
+        'Señalización conforme a la NOM-026 en rutas y equipo contra incendio',
+        'Brigadas capacitadas en incendios, primeros auxilios y evacuación',
+        'Programa interno de protección civil actualizado',
+        'Rutas de evacuación señalizadas y libres de obstrucción'
+      ],
+      destacadas: ['extintores', 'senalamientos', 'epp', 'bomberos', 'alturas', 'deteccion'].map(slug => {
+        const c = CATS.find(x => x.slug === slug);
+        return { name: c.name, short: c.short, ph: c.ph, alt: c.alt, img: imgPath(CAT_IMG[slug]), bg: imgBg(CAT_IMG[slug]), noImg: !CAT_IMG[slug], open: () => this.openCat(slug) };
+      }),
+      estados: ['Michoacán', 'Guanajuato', 'Jalisco', 'Querétaro', 'Guerrero', 'Veracruz', 'Tlaxcala', 'Estado de México'],
+      marcas: ['Romak Fire', 'Extin-Flam', 'MR Seguridad', 'Akron Brass', 'Task Force Tips', 'Copusa Rescate', 'Paratech', 'Amkus Rescue Systems', 'MSA', 'Petzl', 'Dynamed', 'Ferno', 'Simulaids', 'DuPont', 'Kidde / Badger', 'Eco Vial', '+By Lack Seguridad'],
+      dependencias: ['Protección Civil', 'Secretaría del Trabajo y Previsión Social', 'Secretaría de Economía', 'PROFECO'],
+
+      credRecarga: [
+        { titulo: 'NOM-154-SCFI-2005 desde ' + (p.cumplimientoDesde || '2008'), detalle: 'La norma que rige a todos los recargadores del país. No todos la cumplen.' },
+        { titulo: 'Registro vigente ' + registro, detalle: 'Dependencia o unidad de verificación emisora por confirmar.' },
+        { titulo: 'Garantía por escrito', detalle: 'Prueba, dictamen y etiqueta de servicio en cada equipo entregado.' }
+      ],
+      agentesRecarga: [
+        { name: 'PQS', uso: 'Polvo químico seco para fuego A, B y C.' },
+        { name: 'CO₂', uso: 'Tableros y equipo electrónico, sin residuo.' },
+        { name: 'Agua', uso: 'Sólidos ordinarios: papel, madera y textil.' },
+        { name: 'Agua con espuma AFFF', uso: 'Agua ligera para líquidos inflamables.' },
+        { name: 'Clase K', uso: 'Grasas y aceites de cocina industrial.' },
+        { name: 'Agente limpio HFC-236fa', uso: 'Sitios de cómputo y salas de control.' },
+        { name: 'Clase D', uso: 'Metales combustibles en taller y fundición.' },
+        { name: 'F-500', uso: 'Baterías de litio y montacargas eléctricos.' }
+      ],
+      pasosRecarga: [
+        { n: '01', title: 'Recepción y diagnóstico', desc: 'Revisión de cilindro, válvula y vigencia; se define si procede recarga o mantenimiento mayor.' },
+        { n: '02', title: 'Mantenimiento y recarga', desc: 'Despresurizado, limpieza interior, reemplazo de componentes y carga con agente certificado.' },
+        { n: '03', title: 'Prueba y dictamen', desc: 'Prueba hidrostática cuando aplica, verificación de hermeticidad y dictamen conforme a la NOM-154.' },
+        { n: '04', title: 'Entrega con garantía', desc: 'Etiqueta de servicio con fecha, siguiente vencimiento y garantía por escrito.' }
+      ],
+      programa: [
+        'Inventario de sus equipos con ubicación y fecha de vencimiento',
+        'Aviso anticipado antes de que venza la carga',
+        'Visita programada para no detener la operación',
+        'Expediente listo para presentar en inspección'
+      ],
+      pendientesRecarga: [
+        { label: 'Tiempo de entrega', valor: p.tiempoEntrega || 'Por confirmar con el cliente' },
+        { label: 'Recolección y entrega a domicilio', valor: p.recoleccion || 'Por confirmar con el cliente' },
+        { label: 'Extintor a préstamo durante el servicio', valor: p.prestamo || 'Por confirmar con el cliente' }
+      ],
+
+      cursosPC: CURSOS_PC.map(c => ({
+        name: c.name, desc: c.desc, para: c.para,
+        wa: this.wa('Hola PRESEQ, quiero agendar el curso de ' + c.name.toLowerCase() + '. Somos aproximadamente ___ personas en Morelia.')
+      })),
+      noms: NOMS.map(n => ({ id: n.id, titulo: n.titulo, open: () => this.openNom(n.id) })),
+      activeNom: {
+        id: activeNom.id, titulo: activeNom.titulo, exige: activeNom.exige, aplica: activeNom.aplica,
+        curso: activeNom.curso, producto: activeNom.producto, ctaProducto: activeNom.cta,
+        goProducto: () => { if (activeNom.cat === 'consultoria') this.go('consultoria'); else this.openCat(activeNom.cat); }
+      },
+      giros: GIROS.map(g => ({
+        name: g.name, detalle: g.detalle, normas: g.normas,
+        on: g.name === s.giro, sign: g.name === s.giro ? '−' : '+',
+        bg: g.name === s.giro ? '#23282E' : 'transparent',
+        toggle: () => this.setState({ giro: g.name === s.giro ? null : g.name })
+      })),
+
+      serviciosPC: [
+        { name: 'Programas internos de protección civil', desc: 'Documento integral con análisis de riesgo, plan de emergencia, brigadas y evidencias para su presentación ante la autoridad.' },
+        { name: 'Inspecciones y levantamientos', desc: 'Determinación del equipamiento que exige la norma en empresas, comercios y zonas habitacionales.' },
+        { name: 'Programas especiales de protección civil', desc: 'Para eventos, obras y actividades temporales que requieren autorización específica.' },
+        { name: 'Estudios de riesgo', desc: 'Identificación y evaluación de riesgos internos y externos, con medidas de mitigación priorizadas.' }
+      ],
+      serviciosSTPS: [
+        { name: 'Atención a inspecciones de la STPS', desc: 'Acompañamiento durante la visita, respuesta al requerimiento y plan de cierre de hallazgos.', link: false },
+        { name: 'Documentación y procedimientos normativos', desc: 'Elaboración de los procedimientos, registros y programas que exigen las normas oficiales mexicanas de la STPS.', link: false },
+        { name: 'Capacitación normativa', desc: 'Cursos que acreditan la capacitación exigida por cada norma, con la práctica correspondiente.', link: true }
+      ],
+      pasosConsultoria: [
+        { n: '01', title: 'Diagnóstico', desc: 'Revisión documental y recorrido inicial para ubicar los incumplimientos.' },
+        { n: '02', title: 'Levantamiento', desc: 'Mediciones, inventario de equipo y registro fotográfico en sitio.' },
+        { n: '03', title: 'Documento entregable', desc: 'Programa, estudio o dictamen firmado por el responsable técnico.' },
+        { n: '04', title: 'Seguimiento', desc: 'Plan de cierre de hallazgos y recordatorio de vigencias.' }
+      ],
+
+      telefonos: [
+        { num: '443 320 7106', href: 'tel:+524433207106', nota: '¿principal? · por confirmar' },
+        { num: '443 445 0138', href: 'tel:+524434450138', nota: '¿WhatsApp? · por confirmar' },
+        { num: '443 209 6241', href: 'tel:+524432096241', nota: 'por confirmar' }
+      ],
+      sent: s.sent,
+      onSubmit: e => { e.preventDefault(); this.setState({ sent: true }); },
+
+      footerProductos: ['extintores', 'senalamientos', 'epp', 'bomberos', 'deteccion'].map(slug => {
+        const c = CATS.find(x => x.slug === slug);
+        return { name: c.name, open: () => this.openCat(slug) };
+      })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
