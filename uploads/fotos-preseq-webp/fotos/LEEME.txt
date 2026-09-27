@@ -1,0 +1,37 @@
+FOTOGRAFÍAS PRESEQ — banco de imágenes para el sitio web
+Convertidas a WebP, calidad 82, sin metadatos EXIF (se eliminó
+la geolocalización que traían los archivos originales).
+
+──────────────────────────────────────────────────────────
+LIBRES DE USAR  — instalaciones y producto propios de PRESEQ
+──────────────────────────────────────────────────────────
+extintor-preseq-etiqueta-nom154 . Etiqueta con NOM-154 y registro 3RS.
+                                  La mejor prueba visual de la credencial.
+centro-capacitacion-instructor .. Personal PRESEQ en su centro.
+centro-capacitacion-extintores .. Extintores formados en el campo.
+practica-extintores-campo ....... Práctica con extintores. Buena para portada.
+practica-brigada-equipamiento ... Grupo equipándose con trajes.
+practica-manguera-hidrante ...... Línea de manguera. Buena para portada y
+                                  para Sistemas contra incendio.
+
+──────────────────────────────────────────────────────────
+REQUIEREN AUTORIZACIÓN — marca de tercero visible
+──────────────────────────────────────────────────────────
+simulacro-rescate-escaleras ..... Carteles PRINCIPIOS KOF al fondo.
+simulacro-traslado-camilla ...... Carteles PRINCIPIOS KOF al fondo.
+evacuacion-interior-planta ...... Refrigerador y gráfica Coca-Cola.
+brigada-formacion-patio ......... Camiones Coca-Cola al fondo.
+
+No publicar sin autorización escrita del cliente corporativo.
+Alternativa: recortar o difuminar la marca, o usarlas solo en
+presentaciones internas.
+
+──────────────────────────────────────────────────────────
+REVISAR CONSENTIMIENTO — personas identificables
+──────────────────────────────────────────────────────────
+simulacro-atencion-lesionado, primeros-auxilios-dea,
+evacuacion-punto-reunion, capacitacion-aula,
+hazmat-traje-encapsulado, hazmat-espacio-confinado
+
+Son empleados del cliente, no de PRESEQ. Conviene tener su
+autorización, o preferir tomas donde no se distingan rostros.
