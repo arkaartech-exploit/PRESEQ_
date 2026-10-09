@@ -1315,7 +1315,7 @@ const AGENTES = [
   { name: 'Bióxido de carbono (CO₂)', clases: ['B', 'C'], aplic: 'Tableros eléctricos, equipo electrónico y cuartos de máquinas.', desc: 'Desplaza el oxígeno y no deja residuo sobre el equipo.', caps: ['4.5 kg', '6 kg', '9 kg'], img: 'extintores-co2' },
   { name: 'Agua a presión', clases: ['A'], aplic: 'Papel, madera, textil y sólidos ordinarios.', desc: 'Enfría el material combustible. No se usa sobre equipo eléctrico energizado.', caps: ['6 litros', '10 litros'] },
   { name: 'Agua con espuma AFFF (agua ligera)', clases: ['A', 'B'], aplic: 'Almacenes de combustibles, talleres y derrames de líquidos inflamables.', desc: 'Forma una película sobre el líquido que sofoca el fuego y evita la reignición.', caps: ['6 litros', '10 litros'] },
-  { name: 'Clase K para cocinas', clases: ['K'], aplic: 'Cocinas industriales, restaurantes y comedores.', desc: 'Actúa sobre grasas y aceites de cocción: los convierte en una capa que sofoca y enfría la superficie.', caps: ['6 litros', '10 litros'] },
+  { name: 'Clase K para cocinas', clases: ['K'], aplic: 'Cocinas industriales, restaurantes y comedores.', desc: 'Actúa sobre grasas y aceites de cocción: los convierte en una capa que sofoca y enfría la superficie.', caps: ['6 litros', '10 litros'], img: 'clase-k' },
   { name: 'Agente limpio HFC-236-A', clases: ['A', 'B', 'C'], aplic: 'Sitios de cómputo, salas de control, archivos y equipo delicado.', desc: 'No conduce electricidad ni deja residuo: protege el equipo mientras extingue.', caps: ['1 kg', '2.5 kg', '4.5 kg', '6 kg'] },
   { name: 'Clase D para metales', clases: ['D'], aplic: 'Talleres de maquinado, fundición y manejo de magnesio, aluminio o sodio.', desc: 'Polvo especial que forma una costra sobre el metal combustible y lo aísla del oxígeno.', caps: ['9 kg'] },
   { name: 'F-500 para baterías de litio', clases: ['Litio'], aplic: 'Montacargas eléctricos, salas de baterías, almacenes y flotillas eléctricas.', desc: 'Agente encapsulador: enfría y controla la reacción térmica de las celdas de litio.', caps: ['6 litros', '10 litros'] }
@@ -1323,26 +1323,26 @@ const AGENTES = [
 const EXT_EXTRAS = [
   { grupo: 'Extintor automático', name: 'Extintor automático de agente limpio HFC-236-A', uso: 'Cuartos eléctricos y espacios sin vigilancia: descarga solo al detectar fuego.', caps: ['Con detector de humo', 'Sin detector de humo'] },
   { grupo: 'Extintor automático', name: 'Extintor automático PQS', uso: 'Cabinas de maquinaria y espacios cerrados.', caps: ['Con detector de humo', 'Sin detector de humo'] },
-  { grupo: 'Unidad móvil', name: 'Unidad móvil sobre carretilla', uso: 'Naves industriales, patios de maniobra y estaciones de carga: mayor autonomía y alcance.', caps: ['35 kg', '50 kg', '70 kg'] },
+  { grupo: 'Unidad móvil', name: 'Unidad móvil sobre carretilla', uso: 'Naves industriales, patios de maniobra y estaciones de carga: mayor autonomía y alcance.', caps: ['35 kg', '50 kg', '70 kg'], img: 'unidad-movil' },
   { grupo: 'Refacciones', name: 'Refacciones originales para extintor', uso: 'Válvula, manómetro, manguera, difusor, pasador y sello de garantía.', caps: ['Por pieza'], img: 'recarga-cilindros' }
 ];
 const SIS_EQUIPO = [
   { name: 'Gabinetes', uso: 'Gabinete para hidrante con manguera, chiflón y válvula; gabinetes para extintor en acero inoxidable.', caps: ['Para hidrante', 'Para extintor'], img: 'gabinete-extintores' },
-  { name: 'Mangueras contra incendio', uso: 'Para red de hidrantes y brigada de ataque.', caps: ['1½ pulgadas', '2½ pulgadas', '30 m'] },
+  { name: 'Mangueras contra incendio', uso: 'Para red de hidrantes y brigada de ataque.', caps: ['1½ pulgadas', '2½ pulgadas', '30 m'], img: 'mangueras' },
   { name: 'Válvulas', uso: 'Válvulas para la red de hidrantes, según especificación del proyecto.', caps: ['Según proyecto'] },
   { name: 'Chiflones', uso: 'Chorro directo y niebla según el riesgo a proteger.', caps: ['Chorro y niebla'] }
 ];
 const PROD_IMG = { 'Casco de seguridad': 'casco', 'Protección facial y ocular': 'googles', 'Protección auditiva': 'auditiva', 'Protección respiratoria': 'respirador', 'Protección para manos': 'guantes', 'Protección corporal': 'overol', 'Chalecos reflejantes y de malla': 'chaleco', 'Calzado de protección con casquillo': 'botas', 'Ropa desechable y trajes encapsulados': 'traje-desechable' };
 const EPP = [
-  { name: 'Casco de seguridad', uso: 'Riesgo de impacto y caída de objetos.', caps: ['10 colores', 'Ala ancha', 'Tipo gorra'], norma: 'NOM-115-STPS' },
+  { name: 'Casco de seguridad', uso: 'Riesgo de impacto y caída de objetos.', caps: ['10 colores', 'Ala ancha', 'Tipo gorra'], norma: 'NOM-115-STPS', img: 'casco-epp' },
   { name: 'Protección facial y ocular', uso: 'Partículas, salpicaduras y soldadura.', caps: ['Lentes', 'Goggles', 'Careta para soldar'], norma: 'NOM-017-STPS' },
   { name: 'Protección auditiva', uso: 'Áreas con ruido por encima del límite permisible.', caps: ['Tapones', 'Diademas', 'Dispensador'], norma: 'NOM-011-STPS' },
-  { name: 'Protección respiratoria', uso: 'Polvos, vapores y atmósferas contaminadas.', caps: ['Mascarillas', 'Respirador de cartucho'], norma: 'NOM-116-STPS' },
+  { name: 'Protección respiratoria', uso: 'Polvos, vapores y atmósferas contaminadas.', caps: ['Mascarillas', 'Respirador de cartucho'], norma: 'NOM-116-STPS', img: 'respiratoria' },
   { name: 'Protección para manos', uso: 'Corte, impacto, químicos y manejo de materiales.', caps: ['Carnaza', 'Nitrilo', 'Poliuretano', 'Anticorte'], norma: 'NOM-017-STPS' },
   { name: 'Protección corporal', uso: 'Lluvia, calor radiante y alta visibilidad.', caps: ['Impermeables', 'Ponchos', 'Mandiles'], norma: 'NOM-017-STPS' },
-  { name: 'Chalecos reflejantes y de malla', uso: 'Maniobras, patio y vialidad interna.', caps: ['Multicolor', 'Gorras reflejantes'], norma: 'NOM-017-STPS' },
+  { name: 'Chalecos reflejantes y de malla', uso: 'Maniobras, patio y vialidad interna.', caps: ['Multicolor', 'Gorras reflejantes'], norma: 'NOM-017-STPS', img: 'chalecos' },
   { name: 'Calzado de protección con casquillo', uso: 'Riesgo de impacto y compresión en pie.', caps: ['Bota industrial', 'Tenis industrial'], norma: 'NOM-113-STPS' },
-  { name: 'Ropa desechable y trajes encapsulados', uso: 'Manejo de químicos y control de partículas.', caps: ['Químicos', 'Partículas'], norma: 'NOM-017-STPS' }
+  { name: 'Ropa desechable y trajes encapsulados', uso: 'Manejo de químicos y control de partículas.', caps: ['Químicos', 'Partículas'], norma: 'NOM-017-STPS', img: 'encapsulados' }
 ];
 const PROV = [
   { name: 'Señalamientos', desc: 'NOM-026-STPS y NOM-003-SEGOB, fabricados a medida y en material luminiscente.', items: [
