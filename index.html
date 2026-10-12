@@ -334,12 +334,16 @@
 
   <section style="max-width:1320px;margin:0 auto;padding:clamp(44px,6vw,72px) 16px">
     <h2 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:500;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#9AA3AD">Marcas que distribuimos</h2>
-    <p style="margin:0 0 22px;font-size:14px;color:#7E868F">Placas de texto como marcador de posición; los logotipos se integran con autorización de cada fabricante.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+    <p style="margin:0 0 22px;font-size:14px;color:#7E868F">Equipo original de fabricantes certificados, con respaldo de garantía y refacciones.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(108px,26vw,156px),1fr));gap:10px">
       <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="17">
-        <div style="background:#23282E;padding:22px 14px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:96px;text-align:center">
-          <span style="font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ m }}</span>
-          <span style="margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#7E868F">logotipo autorizado pendiente</span>
+        <div style="background:#FFFFFF;display:flex;align-items:center;justify-content:center;min-height:clamp(78px,21vw,96px);padding:12px;text-align:center">
+          <sc-if value="{{ m.sin }}" hint-placeholder-val="{{ false }}">
+            <span style="font-family:Oswald,sans-serif;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#14171A;line-height:1.2">{{ m.n }}</span>
+          </sc-if>
+          <sc-if value="{{ m.src }}" hint-placeholder-val="{{ 'assets/marcas/extinflam.png' }}">
+            <img src="{{ m.src }}" alt="Logotipo de {{ m.n }}" title="{{ m.n }}" loading="lazy" decoding="async" width="160" height="80" style="display:block;width:100%;max-width:160px;height:auto" />
+          </sc-if>
         </div>
       </sc-for>
     </div>
@@ -1082,12 +1086,16 @@
 
   <section style="max-width:1320px;margin:0 auto;padding:clamp(36px,5vw,60px) 16px">
     <h2 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">Marcas que distribuimos</h2>
-    <p style="margin:0 0 22px;font-size:15px;color:#9AA3AD">Placas de texto como marcador de posición hasta contar con los logotipos autorizados.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
+    <p style="margin:0 0 22px;font-size:15px;color:#9AA3AD">Trabajamos con equipo original de fabricantes certificados. Cada marca responde por su garantía y nosotros por la instalación, la recarga y el servicio.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(108px,26vw,156px),1fr));gap:10px">
       <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="17">
-        <div style="background:#23282E;padding:22px 14px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100px;text-align:center">
-          <span style="font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7;line-height:1.2">{{ m }}</span>
-          <span style="margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#7E868F">logotipo autorizado pendiente</span>
+        <div style="background:#FFFFFF;display:flex;align-items:center;justify-content:center;min-height:clamp(78px,21vw,96px);padding:12px;text-align:center">
+          <sc-if value="{{ m.sin }}" hint-placeholder-val="{{ false }}">
+            <span style="font-family:Oswald,sans-serif;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#14171A;line-height:1.2">{{ m.n }}</span>
+          </sc-if>
+          <sc-if value="{{ m.src }}" hint-placeholder-val="{{ 'assets/marcas/extinflam.png' }}">
+            <img src="{{ m.src }}" alt="Logotipo de {{ m.n }}" title="{{ m.n }}" loading="lazy" decoding="async" width="160" height="80" style="display:block;width:100%;max-width:160px;height:auto" />
+          </sc-if>
         </div>
       </sc-for>
     </div>
@@ -1557,7 +1565,25 @@ class Component extends DCLogic {
         { name: 'EPP y seguridad industrial', short: 'Protección de cabeza a pies para planta, obra y laboratorio.', href: href('epp'), bg: imgBg('casco'), alt: 'Casco de seguridad', nuevo: false }
       ],
       estados: ['Michoacán', 'Guanajuato', 'Jalisco', 'Querétaro', 'Guerrero', 'Veracruz', 'Tlaxcala', 'Estado de México'],
-      marcas: ['Romak Fire', 'Extin-Flam', 'MR Seguridad', 'Akron Brass', 'Task Force Tips', 'Copusa Rescate', 'Paratech', 'Amkus Rescue Systems', 'MSA', 'Petzl', 'Dynamed', 'Ferno', 'Simulaids', 'DuPont', 'Kidde / Badger', 'Eco Vial', '+By Lack Seguridad'],
+      marcas: [
+        { n: 'Extin-Flam', src: 'assets/marcas/extinflam.png' },
+        { n: 'Akron Brass', src: 'assets/marcas/akron.png' },
+        { n: 'Task Force Tips', src: 'assets/marcas/tft.png' },
+        { n: 'Amkus Rescue Systems', src: 'assets/marcas/amkus.png' },
+        { n: 'Paratech', src: 'assets/marcas/paratech.png' },
+        { n: 'MSA', src: 'assets/marcas/msa.png' },
+        { n: 'Petzl', src: 'assets/marcas/petzl.png' },
+        { n: 'Ferno', src: 'assets/marcas/ferno.png' },
+        { n: 'Simulaids', src: 'assets/marcas/simulaids.png' },
+        { n: 'Dynamed', src: 'assets/marcas/dynamed.png' },
+        { n: 'DuPont', src: 'assets/marcas/dupont.png' },
+        { n: 'Kidde / Badger', src: 'assets/marcas/badger.png' },
+        { n: 'Copusa Rescate', src: 'assets/marcas/copusa.png' },
+        { n: 'MR Seguridad', src: 'assets/marcas/mr-seguridad.png' },
+        { n: 'Eco Vial', src: 'assets/marcas/ecovial.png' },
+        { n: '+By Lack Seguridad', src: 'assets/marcas/bylack.png' },
+        { n: 'Romak Fire', sin: true }
+      ],
       dependencias: ['Protección Civil', 'Secretaría del Trabajo y Previsión Social', 'Secretaría de Economía', 'PROFECO'],
 
       tiposCliente: ['Empresas e industria', 'Comercios', 'Zonas habitacionales', 'Fraccionamientos y condominios'],
