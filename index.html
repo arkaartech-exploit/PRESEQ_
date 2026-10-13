@@ -336,7 +336,7 @@
     <h2 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:500;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#9AA3AD">Marcas que distribuimos</h2>
     <p style="margin:0 0 22px;font-size:14px;color:#7E868F">Equipo original de fabricantes certificados, con respaldo de garantía y refacciones.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(108px,26vw,156px),1fr));gap:10px">
-      <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="17">
+      <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="14">
         <div style="background:#FFFFFF;display:flex;align-items:center;justify-content:center;min-height:clamp(78px,21vw,96px);padding:12px;text-align:center">
           <sc-if value="{{ m.sin }}" hint-placeholder-val="{{ false }}">
             <span style="font-family:Oswald,sans-serif;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#14171A;line-height:1.2">{{ m.n }}</span>
@@ -1088,7 +1088,7 @@
     <h2 style="margin:0 0 6px;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(22px,3vw,32px);text-transform:uppercase;color:#F5F6F7">Marcas que distribuimos</h2>
     <p style="margin:0 0 22px;font-size:15px;color:#9AA3AD">Trabajamos con equipo original de fabricantes certificados. Cada marca responde por su garantía y nosotros por la instalación, la recarga y el servicio.</p>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(108px,26vw,156px),1fr));gap:10px">
-      <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="17">
+      <sc-for list="{{ marcas }}" as="m" hint-placeholder-count="14">
         <div style="background:#FFFFFF;display:flex;align-items:center;justify-content:center;min-height:clamp(78px,21vw,96px);padding:12px;text-align:center">
           <sc-if value="{{ m.sin }}" hint-placeholder-val="{{ false }}">
             <span style="font-family:Oswald,sans-serif;font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#14171A;line-height:1.2">{{ m.n }}</span>
@@ -1453,7 +1453,9 @@ class Component extends DCLogic {
     const registro = p.registro || '3RS 065 2026';
     const desde = p.cumplimientoDesde || '2008';
     const anos = p.anosTrayectoria || 22;
-    const pend = p.mostrarPendientes !== false;
+    // Notas internas de revision: ocultas en produccion.
+    // Para volver a verlas durante una revision, cambiar false por true.
+    const pend = false;
     const pg = PAGES[s.page] || PAGES.inicio;
 
     const anios = {};
@@ -1488,7 +1490,7 @@ class Component extends DCLogic {
       telHref: 'tel:+52' + tel.replace(/\D/g, ''),
       horario: p.horario || 'Lunes a viernes de 9:00 a 18:00 · Sábado de 9:00 a 14:00',
       correo: p.correo || 'Correo oficial por confirmar',
-      sitioWeb: p.sitioWeb || 'Dominio por confirmar',
+      sitioWeb: p.sitioWeb || 'www.preseq.com.mx',
       registro, cumplimientoDesde: desde, anosTrayectoria: anos,
       anoFundacion: p.anoFundacion || '2004',
       marcaRegistrada: p.marcaRegistrada || 'existencia del registro y número por confirmar',
@@ -1567,22 +1569,19 @@ class Component extends DCLogic {
       estados: ['Michoacán', 'Guanajuato', 'Jalisco', 'Querétaro', 'Guerrero', 'Veracruz', 'Tlaxcala', 'Estado de México'],
       marcas: [
         { n: 'Extin-Flam', src: 'assets/marcas/extinflam.png' },
+        { n: 'Extinpar', src: 'assets/marcas/extinpar.png' },
+        { n: 'Romak Safety Products', src: 'assets/marcas/romak.png' },
         { n: 'Akron Brass', src: 'assets/marcas/akron.png' },
         { n: 'Task Force Tips', src: 'assets/marcas/tft.png' },
-        { n: 'Amkus Rescue Systems', src: 'assets/marcas/amkus.png' },
-        { n: 'Paratech', src: 'assets/marcas/paratech.png' },
-        { n: 'MSA', src: 'assets/marcas/msa.png' },
+        { n: 'Bullard', src: 'assets/marcas/bullard.png' },
+        { n: 'Dräger', src: 'assets/marcas/drager.png' },
         { n: 'Petzl', src: 'assets/marcas/petzl.png' },
-        { n: 'Ferno', src: 'assets/marcas/ferno.png' },
-        { n: 'Simulaids', src: 'assets/marcas/simulaids.png' },
-        { n: 'Dynamed', src: 'assets/marcas/dynamed.png' },
-        { n: 'DuPont', src: 'assets/marcas/dupont.png' },
-        { n: 'Kidde / Badger', src: 'assets/marcas/badger.png' },
-        { n: 'Copusa Rescate', src: 'assets/marcas/copusa.png' },
+        { n: 'Croydon', src: 'assets/marcas/croydon.png' },
+        { n: 'AP Safety', src: 'assets/marcas/ap-safety.png' },
         { n: 'MR Seguridad', src: 'assets/marcas/mr-seguridad.png' },
-        { n: 'Eco Vial', src: 'assets/marcas/ecovial.png' },
-        { n: '+By Lack Seguridad', src: 'assets/marcas/bylack.png' },
-        { n: 'Romak Fire', sin: true }
+        { n: 'Ironguy', src: 'assets/marcas/ironguy.png' },
+        { n: 'MediHelp', src: 'assets/marcas/medihelp.png' },
+        { n: 'Eco Vial', src: 'assets/marcas/ecovial.png' }
       ],
       dependencias: ['Protección Civil', 'Secretaría del Trabajo y Previsión Social', 'Secretaría de Economía', 'PROFECO'],
 
