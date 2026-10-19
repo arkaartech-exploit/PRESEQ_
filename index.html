@@ -203,9 +203,9 @@
     <div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(20,23,26,.96) 0%,rgba(20,23,26,.82) 48%,rgba(35,40,46,.55) 100%)"></div>
     <div style="position:absolute;left:0;bottom:0;width:100%;height:120px;background:#14171A;clip-path:polygon(0 60%,100% 0,100% 100%,0 100%);opacity:.9"></div>
     <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(52px,9vw,124px) 16px clamp(70px,9vw,132px)">
-      <p style="margin:0 0 22px;display:inline-block;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E;border:1px solid rgba(242,176,30,.45);padding:7px 12px">Empresa orgullosamente moreliana · desde {{ anoFundacion }}</p>
+      <p style="margin:0 0 22px;display:inline-block;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#F2B01E;border:1px solid rgba(242,176,30,.45);padding:7px 12px">PRESEQ · Orgullosamente morelianos</p>
       <h1 style="margin:0;max-width:13ch;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(42px,8vw,92px);line-height:.96;letter-spacing:-.015em;text-transform:uppercase;color:#F5F6F7">Tu seguridad es nuestro porqué</h1>
-      <p style="margin:24px 0 0;max-width:62ch;font-size:clamp(16px,2.1vw,21px);line-height:1.55;color:#C6CDD4">Equipo contra incendio, recarga certificada, capacitación y cumplimiento normativo.</p>
+      <p style="margin:24px 0 0;max-width:62ch;font-size:clamp(16px,2.1vw,21px);line-height:1.55;color:#C6CDD4">Proveedor constante y confiable de productos y servicios de calidad, para la seguridad de su empresa y de su familia.</p>
       <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:36px">
         <a href="#/contacto" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 30px" style-hover="color:#fff;text-decoration:none;filter:brightness(1.12)">Solicitar cotización</a>
         <a href="#/productos/extintores" style="background:transparent;border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.07em;text-transform:uppercase;padding:17px 30px" style-hover="background:#F5F6F7;color:#14171A;text-decoration:none">Ver extintores</a>
@@ -217,10 +217,11 @@
     <div style="max-width:1320px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;flex-wrap:wrap;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)">
         <div style="flex:2 1 320px;background:linear-gradient(120deg,rgba(242,176,30,.16),rgba(242,176,30,.04)),#23282E;border-top:3px solid #F2B01E;padding:22px 24px">
-          <p style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(24px,3vw,32px);letter-spacing:.03em;color:#F2B01E;line-height:1.05">NOM-154-SCFI-2005</p>
-          <p style="margin:8px 0 0;font-family:Oswald,sans-serif;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7">Verificados desde {{ cumplimientoDesde }}</p>
+          <p style="margin:0;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#F5F6F7">Empresa dictaminada y verificada desde {{ cumplimientoDesde }}</p>
+          <p style="margin:6px 0 0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(24px,3vw,32px);letter-spacing:.03em;color:#F2B01E;line-height:1.05">NOM-154-SCFI-2005</p>
+          <p style="margin:8px 0 0;font-family:Oswald,sans-serif;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7">Venta, recarga y mantenimiento de extintores</p>
         </div>
-        <sc-for list="{{ creds }}" as="c" hint-placeholder-count="4">
+        <sc-for list="{{ creds }}" as="c" hint-placeholder-count="5">
           <div style="flex:1 1 200px;background:#1A1E22;padding:22px 20px;border-top:3px solid transparent">
             <p style="margin:0;font-family:Oswald,sans-serif;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#F5F6F7;line-height:1.25">{{ c.t }}</p>
             <p style="margin:7px 0 0;font-size:14px;line-height:1.5;color:#9AA3AD">{{ c.d }}</p>
@@ -228,7 +229,7 @@
         </sc-for>
       </div>
       <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px">
-        <sc-for list="{{ servLista }}" as="s" hint-placeholder-count="6">
+        <sc-for list="{{ servLista }}" as="s" hint-placeholder-count="12">
           <li style="display:flex;align-items:center;gap:9px;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:#C6CDD4"><span aria-hidden="true" style="width:7px;height:7px;background:#CE1B1B;display:block"></span>{{ s }}</li>
         </sc-for>
       </ul>
@@ -284,7 +285,7 @@
         <div>
           <p style="margin:0 0 14px;display:inline-block;background:rgba(242,176,30,.14);border:1px solid rgba(242,176,30,.5);color:#F2B01E;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px">Nuevo en la región</p>
           <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:700;font-size:clamp(26px,4vw,42px);line-height:1.05;text-transform:uppercase;color:#F5F6F7">Extintores para baterías de litio · F-500</h2>
-          <p style="margin:16px 0 0;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:52ch">Montacargas eléctricos, salas de baterías, almacenes de litio y flotillas. El agente F-500 encapsula y enfría la reacción térmica de las celdas.</p>
+          <p style="margin:16px 0 0;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:52ch">Vehículos eléctricos, montacargas eléctricos y salas de baterías. El agente F-500 encapsula y enfría la reacción térmica de las celdas.</p>
           <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
             <button onClick="{{ goLitio }}" style="background:linear-gradient(135deg,#CE1B1B,#8E1010);border:1px solid rgba(255,255,255,.12);color:#fff;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:16px 24px;cursor:pointer" style-hover="filter:brightness(1.12)">Ver extintor F-500</button>
             <a href="{{ waLitio }}" target="_blank" rel="noopener" style="border:1px solid #F5F6F7;color:#F5F6F7;font-family:Oswald,sans-serif;font-size:14px;letter-spacing:.07em;text-transform:uppercase;padding:16px 24px" style-hover="background:#F5F6F7;color:#14171A;text-decoration:none">Preguntar por WhatsApp</a>
@@ -319,7 +320,7 @@
       <div>
         <p style="margin:0 0 16px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#CE1B1B">04 · Cobertura</p>
         <h2 style="margin:0;font-family:Oswald,sans-serif;font-weight:600;font-size:clamp(26px,3.6vw,40px);letter-spacing:-.01em;text-transform:uppercase;color:#F5F6F7">Ocho estados desde Morelia</h2>
-        <p style="margin:16px 0 24px;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:46ch">Producto, recarga, capacitación y consultoría con ruta programada al Bajío y Occidente. La planta que nos contrata en Morelia recibe el mismo servicio en sus otras sedes.</p>
+        <p style="margin:16px 0 24px;font-size:17px;line-height:1.6;color:#C6CDD4;max-width:46ch">Extintores, recargas, capacitación y consultoría con ruta programada al Bajío y Occidente. La planta que nos contrata en Morelia recibe el mismo servicio en sus otras sedes.</p>
         <ul style="list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px">
           <sc-for list="{{ estados }}" as="e" hint-placeholder-count="8">
             <li style="display:flex;align-items:center;gap:9px;background:#23282E;border:1px solid rgba(255,255,255,.08);padding:9px 14px;font-size:14px;color:#F5F6F7"><span aria-hidden="true" style="width:9px;height:9px;background:#CE1B1B;display:block"></span>{{ e }}</li>
@@ -1326,7 +1327,7 @@ const AGENTES = [
   { name: 'Clase K para cocinas', clases: ['K'], aplic: 'Cocinas industriales, restaurantes y comedores.', desc: 'Actúa sobre grasas y aceites de cocción: los convierte en una capa que sofoca y enfría la superficie.', caps: ['6 litros', '10 litros'], img: 'clase-k' },
   { name: 'Agente limpio HFC-236-A', clases: ['A', 'B', 'C'], aplic: 'Sitios de cómputo, salas de control, archivos y equipo delicado.', desc: 'No conduce electricidad ni deja residuo: protege el equipo mientras extingue.', caps: ['1 kg', '2.5 kg', '4.5 kg', '6 kg'] },
   { name: 'Clase D para metales', clases: ['D'], aplic: 'Talleres de maquinado, fundición y manejo de magnesio, aluminio o sodio.', desc: 'Polvo especial que forma una costra sobre el metal combustible y lo aísla del oxígeno.', caps: ['9 kg'] },
-  { name: 'F-500 para baterías de litio', clases: ['Litio'], aplic: 'Montacargas eléctricos, salas de baterías, almacenes y flotillas eléctricas.', desc: 'Agente encapsulador: enfría y controla la reacción térmica de las celdas de litio.', caps: ['6 litros', '10 litros'] }
+  { name: 'Extintor de espuma encapsuladora F-500', clases: ['Litio'], aplic: 'Vehículos eléctricos, montacargas eléctricos, salas de baterías, almacenes de litio y flotillas.', desc: 'Tecnología de triple acción: enfría, encapsula los vapores y evita la reignición. Efectivo en fuegos clase A, B y D, y en riesgo eléctrico incluidas las baterías de litio. Reduce la temperatura con rapidez, de modo que el fuego no revive. Agente biodegradable y no tóxico, apto para espacios cerrados con personal. Un solo equipo cubre riesgos que de otro modo exigirían varios extintores específicos.', caps: ['2.5 galones', '6 litros', '10 litros'] }
 ];
 const EXT_EXTRAS = [
   { grupo: 'Extintor automático', name: 'Extintor automático de agente limpio HFC-236-A', uso: 'Cuartos eléctricos y espacios sin vigilancia: descarga solo al detectar fuego.', caps: ['Con detector de humo', 'Sin detector de humo'] },
@@ -1540,17 +1541,18 @@ class Component extends DCLogic {
       goLitio: () => this.go('ext', { fuego: 'Litio' }),
 
       creds: [
-        { t: 'Unidad de Verificación 3RS', d: 'Acreditada por la Entidad Mexicana de Acreditación (EMA)' },
-        { t: 'Registro vigente ' + registro, d: 'Verificación del servicio de mantenimiento y recarga' },
-        { t: 'NOM-002-STPS-2010', d: 'Prevención y protección contra incendios en los centros de trabajo' },
-        { t: anos + ' años en Morelia', d: '8 estados de cobertura' }
+        { t: 'Registro vigente ' + registro, d: 'Otorgado por unidad de verificación acreditada por la Entidad Mexicana de Acreditación (EMA)' },
+        { t: 'NOM-002-STPS-2010', d: 'Condiciones de seguridad: prevención y protección contra incendios en los centros de trabajo' },
+        { t: 'Atención en 8 estados', d: 'Consultoría, capacitación y elaboración de programas de Protección Civil y STPS. Registros de Protección Civil en Michoacán, Guanajuato, Guerrero y Jalisco' },
+        { t: 'Dictámenes estructurales y eléctricos', d: 'Elaboración y dictaminación' },
+        { t: 'Sistemas contra incendio', d: 'Proyectos e instalaciones' }
       ],
-      servLista: ['Extintores nuevos', 'Recarga y mantenimiento', 'Empresa dictaminada', 'Capacitaciones', 'Consultoría', 'Equipamiento'],
+      servLista: ['Extintores nuevos', 'Recargas y mantenimiento', 'Señalamientos NOM-026-STPS-2008 y NOM-003-SEGOB-2011', 'Gabinetes para extintor e hidrantes', 'Sistemas contra incendio', 'Capacitaciones de Protección Civil y STPS', 'Consultoría en Protección Civil y STPS', 'EPP y seguridad industrial', 'Herrajes y accesorios contra incendio', 'Botiquines, camillas y detectores de humo', 'Equipos de bombero, autónomos y encapsulados', 'Camiones de bomberos, ambulancias y bombas contra incendio'],
       accesos: [
-        { title: 'Productos y servicios', desc: 'Extintores por tipo de fuego, recarga verificada, sistemas contra incendio y protección personal.', links: [
+        { title: 'Productos y servicios', desc: 'Extintores nuevos por tipo de fuego, recargas y gabinetes, señalamientos de protección civil, detectores de humo, botiquines, sistemas contra incendio y equipo de protección personal.', links: [
           { label: 'Extintores y recargas', href: href('ext') }, { label: 'Recargas y mantenimiento', href: href('recargas') }, { label: 'Sistemas contra incendio', href: href('sistemas') }, { label: 'EPP y seguridad industrial', href: href('epp') }] },
-        { title: 'Capacitaciones', desc: 'Siete cursos de Protección Civil para brigadas y once normas de la STPS, cada una con su ficha.', links: [{ label: 'Ver cursos y normas', href: href('capac') }] },
-        { title: 'Consultoría', desc: 'Programas internos, estudios de riesgo, estudios HAZOP y atención a inspecciones de la STPS.', links: [
+        { title: 'Capacitaciones', desc: 'Más de 15 cursos en materia de Protección Civil para brigadas y 11 en materia de la STPS. Formación de brigadas de emergencia, con constancias y registros de Protección Civil y STPS.', links: [{ label: 'Ver cursos y normas', href: href('capac') }] },
+        { title: 'Consultoría', desc: 'Programas internos de protección civil, dictamen estructural y eléctrico, dictámenes de gas L.P., estudios de riesgo, estudios HAZOP y atención a inspecciones de la STPS.', links: [
           { label: 'Consultoría en Protección Civil', href: href('consPC') }, { label: 'Consultoría STPS', href: href('consSTPS') }] }
       ],
       checklist: [
@@ -1558,7 +1560,7 @@ class Component extends DCLogic {
         'Señalización conforme a la NOM-026 en rutas y equipo contra incendio',
         'Brigadas capacitadas en incendios, primeros auxilios y evacuación',
         'Programa interno de protección civil actualizado',
-        'Rutas de evacuación señalizadas y libres de obstrucción'
+        'Dictamen estructural y eléctrico vigente'
       ],
       destacadas: [
         { name: 'Extintores', short: 'Ocho agentes por tipo de fuego, automáticos y unidades móviles.', href: href('ext'), bg: imgBg('extintores-co2'), alt: 'Extintores', nuevo: false },
